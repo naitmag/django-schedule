@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Авторизация</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js" defer></script>
 </head>
 <body>
 
@@ -36,10 +37,10 @@
                 <label for="password">Пароль</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" class="login-button">Войти</button>
+            <button type="submit" style="background-color: var(--random-color);" class="login-button">Войти</button>
         </form>
         <div class="signup-prompt">
-            Нет аккаунта? <a href="#" class="signup-link">Создайте аккаунт</a>
+            Нет аккаунта? <a href="#" style="color: var(--random-color);" class="signup-link">Создайте аккаунт</a>
         </div>
     </div>
 </div>
@@ -48,14 +49,5 @@
 <div class="footer">
     &copy; 2024 Все права защищены
 </div>
-
-<script>
-    function toggleMenu() {
-        const sidebar = document.getElementById('sidebar');
-        const isOpen = sidebar.style.left === '0px';
-        sidebar.style.left = isOpen ? '-250px' : '0px';
-        document.body.style.marginLeft = isOpen ? '0' : '250px';
-    }
-</script>
 </body>
 </html>

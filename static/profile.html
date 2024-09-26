@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профиль</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js" defer></script>
 </head>
 <body>
 
@@ -27,31 +28,53 @@
 <div class="main-content-profile">
     <div class="profile-container">
         <div class="user-info">
-            <!-- Стиль для фотографии профиля -->
             <div class="profile-pic">
-                <img src="images/profile-photo.jpg" alt="Фото пользователя"
+                <img src="images/custom-photo.jpg" alt="Фото пользователя"
                      style="width: 100%; height: 100%; border-radius: 10px;">
             </div>
 
             <div class="user-details">
-                <h2>Иванов Иван Иванович</h2> <!-- ФИО -->
-                <span class="group-number">Группа: 123456</span> <!-- Номер группы -->
+                <h2>Ярмолович Михаил Васильевич</h2> <!-- ФИО -->
+                <span class="group-number" style="background-color: var(--random-color);">Группа: 308</span>
+                <!-- Номер группы -->
+                <span class="status-container">
+                    <p class="status on-lesson">На занятии</p> <!-- Статус -->
+                </span>
             </div>
         </div>
 
+        <!-- Карточка с занятием -->
+        <div class="lesson-card">
+            <h3>Текущее занятие</h3>
+            <p><strong>Название:</strong> Введение в программирование</p>
+            <p><strong>Тип:</strong> Лекция</p>
+            <p><strong>Время:</strong> 10:05 - 12:25</p>
+            <p><strong>Аудитория:</strong> 612</p>
+            <button class="main-button" style="background-color: var(--random-color);"
+                    onclick="location.href='lesson.html'">Перейти к занятию
+            </button>
+        </div>
+
+        <!-- Условие для отображения статуса занятия -->
         <div class="profile-data">
-            <p><strong>Факультет:</strong> Факультет информационных технологий</p>
-            <p><strong>Кафедра:</strong> Кафедра программного обеспечения</p>
+            <h3>Информация</h3>
+            <p><strong>Факультет:</strong> Факультет культурологии и социально-культурной деятельности (ФКиСКД)</p>
+            <p><strong>Кафедра:</strong> Кафедра информационных технологий в культуре (КИТК)</p>
             <p><strong>Курс:</strong> 3 курс</p>
-            <p><strong>Контакты:</strong></p>
-            <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
-            <p><strong>Email:</strong> ivanov@example.com</p>
-            <p><strong>Соц-сети:</strong></p>
+        </div>
+
+        <div class="contact-info">
+            <h3>Контакты</h3>
+            <p><strong>Телефон:</strong> +375 (29) 123-45-67</p>
+            <p><strong>Email:</strong> ymv@example.com</p>
             <div class="social-links">
-                <a href="#">Telegram</a>
-                <a href="#">VK</a>
-                <a href="#">Facebook</a>
+                <span class="social-button" style="background-color: var(--random-color);"><a
+                        href="#">Telegram</a></span>
+                <span class="social-button" style="background-color: var(--random-color);"><a href="#">VK</a></span>
+                <span class="social-button" style="background-color: var(--random-color);"><a
+                        href="#">Facebook</a></span>
             </div>
+
         </div>
     </div>
 </div>
@@ -60,14 +83,5 @@
 <div class="footer">
     &copy; 2024 Все права защищены
 </div>
-
-<script>
-    function toggleMenu() {
-        const sidebar = document.getElementById('sidebar');
-        const isOpen = sidebar.style.left === '0px';
-        sidebar.style.left = isOpen ? '-250px' : '0px'; // Скрываем/показываем меню
-        document.body.style.marginLeft = isOpen ? '0' : '250px'; // Сдвигаем контент
-    }
-</script>
 </body>
 </html>

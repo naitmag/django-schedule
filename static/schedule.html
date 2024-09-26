@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Расписание занятий</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js" defer></script>
 </head>
 <body>
 
@@ -32,7 +33,6 @@
 </div>
 
 
-
 <!-- Основной блок с карточками расписания -->
 <div class="schedule-container">
     <!-- Карточка Понедельник -->
@@ -44,12 +44,12 @@
             <div class="lesson">
                 <div class="lesson-time">10:05 - 11:25</div>
                 <div class="lesson-type">л.</div>
-                <a href="#" class="lesson-name">3D Анимация</a>
+                <a href="lesson.html" class="lesson-name">3D Анимация</a>
             </div>
             <div class="lesson">
                 <div class="lesson-time">12:00 - 13:20</div>
                 <div class="lesson-type">л.</div>
-                <a href="#" class="lesson-name">3D Анимация</a>
+                <a href="lesson.html" class="lesson-name">3D Анимация</a>
             </div>
         </div>
         <div class="card-footer">
@@ -66,22 +66,22 @@
             <div class="lesson">
                 <div class="lesson-time">08:30 - 09:50</div>
                 <div class="lesson-type">л.</div>
-                <a href="#" class="lesson-name">Фронтенд</a>
+                <a href="lesson.html" class="lesson-name">Фронтенд</a>
             </div>
             <div class="lesson">
                 <div class="lesson-time">10:05 - 11:25</div>
                 <div class="lesson-type">л.</div>
-                <a href="#" class="lesson-name">СКД</a>
+                <a href="lesson.html" class="lesson-name">СКД</a>
             </div>
             <div class="lesson">
                 <div class="lesson-time">12:00 - 13:20</div>
                 <div class="lesson-type">пр.</div>
-                <a href="#" class="lesson-name">Базы данных</a>
+                <a href="lesson.html" class="lesson-name">Технологии создания баз данных сферы культуры</a>
             </div>
             <div class="lesson">
                 <div class="lesson-time">13:35 - 14:55</div>
                 <div class="lesson-type">пр.</div>
-                <a href="#" class="lesson-name">Физ-ра (кардио)</a>
+                <a href="lesson.html" class="lesson-name">Физ-ра (кардио)</a>
             </div>
         </div>
         <div class="card-footer">
@@ -98,12 +98,12 @@
             <div class="lesson">
                 <div class="lesson-time">10:05 - 11:25</div>
                 <div class="lesson-type">л.</div>
-                <a href="#" class="lesson-name">Маркетинг</a>
+                <a href="lesson.html" class="lesson-name">Маркетинг в сфере культуры</a>
             </div>
             <div class="lesson">
                 <div class="lesson-time">12:00 - 13:20</div>
                 <div class="lesson-type">л.</div>
-                <a href="#" class="lesson-name">Фронтенд</a>
+                <a href="lesson.html" class="lesson-name">Фронтенд</a>
             </div>
         </div>
         <div class="card-footer">
@@ -120,17 +120,17 @@
             <div class="lesson">
                 <div class="lesson-time">10:05 - 11:25</div>
                 <div class="lesson-type">л.</div>
-                <a href="#" class="lesson-name">Культурология</a>
+                <a href="lesson.html" class="lesson-name">Фундаментальная культурология</a>
             </div>
             <div class="lesson">
                 <div class="lesson-time">12:00 - 13:20</div>
                 <div class="lesson-type">сем.</div>
-                <a href="#" class="lesson-name">Маркетинг</a>
+                <a href="lesson.html" class="lesson-name">Маркетинг в сфере культуры</a>
             </div>
             <div class="lesson">
                 <div class="lesson-time">13:35 - 14:55</div>
                 <div class="lesson-type">пр.</div>
-                <a href="#" class="lesson-name">Физ-ра (силовой)</a>
+                <a href="lesson.html" class="lesson-name">Физ-ра (силовой)</a>
             </div>
         </div>
         <div class="card-footer">
@@ -146,18 +146,18 @@
         <div class="card-body">
             <div class="lesson">
                 <div class="lesson-time">08:30 - 09:50</div>
-                <div class="lesson-type">кур.</div>
-                <a href="#" class="lesson-name">Час</a>
+                <div class="lesson-type">-</div>
+                <a href="lesson.html" class="lesson-name">Кураторский час</a>
             </div>
             <div class="lesson">
                 <div class="lesson-time">10:05 - 11:25</div>
                 <div class="lesson-type">л.</div>
-                <a href="lesson.html" class="lesson-name">Проектирование (тест?)</a>
+                <a href="lesson.html" class="lesson-name">Социокультурное проектирование</a>
             </div>
             <div class="lesson">
                 <div class="lesson-time">12:00 - 13:20</div>
                 <div class="lesson-type">сем.</div>
-                <a href="#" class="lesson-name">ИИ</a>
+                <a href="lesson.html" class="lesson-name">Искусственный интеллект в культуротворчестве</a>
             </div>
         </div>
         <div class="card-footer">
@@ -184,30 +184,5 @@
 <div class="footer">
     &copy; 2024 Все права защищены
 </div>
-
-<script>
-    let currentWeek = 1
-    let weekOnPage = 4; // Начальная неделя
-
-    // Функция для изменения учебной недели
-    function changeWeek(direction) {
-        weekOnPage += direction;
-        document.getElementById('current-week').innerText = `Неделя ${weekOnPage} (23.09 - 29.09)`; // Обновление текста с номером недели и датами
-
-        // Проверка на текущую неделю
-        if (weekOnPage !== currentWeek) {
-            document.getElementById('nearest-week').style.display = 'inline-block';
-        } else {
-            document.getElementById('nearest-week').style.display = 'none';
-        }
-    }
-
-    function toggleMenu() {
-        const sidebar = document.getElementById('sidebar');
-        const isOpen = sidebar.style.left === '0px';
-        sidebar.style.left = isOpen ? '-250px' : '0px'; // Скрываем/показываем меню
-        document.body.style.marginLeft = isOpen ? '0' : '250px'; // Сдвигаем контент
-    }
-</script>
 </body>
 </html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Информация о занятии</title>
     <link rel="stylesheet" href="css/styles.css">
+     <script src="js/script.js" defer></script>
 </head>
 <body>
 
@@ -26,12 +27,12 @@
 <!-- Основной блок с содержимым -->
 <div class="main-content">
     <div class="lesson-card">
-        <h1 class="lesson-title" align="center">Введение в программирование</h1>
+        <h1 class="lesson-title" align="center">Фронтенд</h1>
 
         <table>
             <tr>
-                <th style="background-color: var(--table-header-color);">Параметр</th>
-                <th style="background-color: var(--table-header-color);">Значение</th>
+                <th style="background-color: var(--random-color);">Параметр</th>
+                <th style="background-color: var(--random-color);">Значение</th>
             </tr>
             <tr>
                 <td><b>Тип</b></td>
@@ -39,7 +40,7 @@
             </tr>
             <tr>
                 <td><b>Время</b></td>
-                <td>10:00 - 12:00</td>
+                <td>10:05 - 12:25</td>
             </tr>
             <tr>
                 <td><b>Дата</b></td>
@@ -51,7 +52,7 @@
             </tr>
             <tr>
                 <td><b>Преподаватель</b></td>
-                <td>Иванов И.И.</td>
+                 <td><a href="teacher.html" class="teacher-link">Бачурина Т.В.</a></td>
             </tr>
             <tr>
                 <td><b>Доп. сведения</b></td>
@@ -69,25 +70,12 @@
         <div class="suggestion-item"><a href="#">Лекция 3: Веб-программирование на Python</a></div>
     </div>
 
-    <button class="main-button" onclick="location.href='schedule.html'">Вернуться к расписанию</button>
+    <button class="main-button" style="background-color: var(--random-color); onclick="location.href='schedule.html'">Вернуться к расписанию</button>
 </div>
 
 <!-- Футер -->
 <div class="footer">
     &copy; 2024 Все права защищены
 </div>
-
-<script>
-    const colors = ['#8cbfba', '#8aacc8', '#d4c56e', '#d89e9f', '#c2a49c', '#a49bd8'];
-    const footerColor = colors[Math.floor(Math.random() * colors.length)];
-    document.documentElement.style.setProperty('--table-header-color', footerColor);
-
-    function toggleMenu() {
-        const sidebar = document.getElementById('sidebar');
-        const isOpen = sidebar.style.left === '0px';
-        sidebar.style.left = isOpen ? '-250px' : '0px';
-        document.body.style.marginLeft = isOpen ? '0' : '250px';
-    }
-</script>
 </body>
 </html>

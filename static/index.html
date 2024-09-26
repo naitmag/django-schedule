@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная страница</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js" defer></script>
 </head>
 <body>
 
@@ -61,13 +62,5 @@
     &copy; 2024 Все права защищены
 </div>
 
-<script>
-    function toggleMenu() {
-        const sidebar = document.getElementById('sidebar');
-        const isOpen = sidebar.style.left === '0px';
-        sidebar.style.left = isOpen ? '-250px' : '0px';
-        document.body.style.marginLeft = isOpen ? '0' : '250px';
-    }
-</script>
 </body>
 </html>
