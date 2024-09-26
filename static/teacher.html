@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль Преподавателя</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Выезжающее меню -->
+<div class="sidebar" id="sidebar">
+    <a href="index.html">Главная</a>
+    <a href="login.html">Вход</a>
+    <a href="profile.html">Личный кабинет</a>
+    <a href="schedule.html">Расписание</a>
+    <a href="teacher.html">Преподаватели</a>
+</div>
+
+<!-- Верхняя панель -->
+<div class="header">
+    <span class="menu-icon" onclick="toggleMenu()">☰</span>
+    Профиль Преподавателя
+</div>
+
+<!-- Основной блок с содержимым -->
+<div class="main-content-profile">
+    <div class="profile-container">
+        <div class="user-info">
+            <div class="profile-pic">
+                <img src="images/profile-photo.jpg" alt="Фото преподавателя"
+                     style="width: 100%; height: 100%; border-radius: 10px;">
+            </div> <!-- Место для фотографии профиля -->
+            <div class="user-details">
+                <h2>Петров Петр Петрович</h2> <!-- ФИО преподавателя -->
+                <span class="position-title">Доцент кафедры программирования</span> <!-- Должность преподавателя -->
+            </div>
+        </div>
+
+        <div class="profile-data">
+            <p><strong>Факультет:</strong> Факультет информационных технологий</p>
+            <p><strong>Кафедра:</strong> Кафедра программного обеспечения</p>
+            <p><strong>Дисциплины:</strong></p>
+            <ul>
+                <li>Основы программирования</li>
+                <li>Алгоритмы и структуры данных</li>
+                <li>Разработка веб-приложений</li>
+            </ul>
+            <p><strong>Контакты:</strong></p>
+            <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
+            <p><strong>Email:</strong> petrov@example.com</p>
+            <p><strong>Соц-сети:</strong></p>
+            <div class="social-links">
+                <a href="#">Telegram</a>
+                <a href="#">VK</a>
+                <a href="#">Facebook</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Футер -->
+<div class="footer">
+    &copy; 2024 Все права защищены
+</div>
+
+<script>
+    function toggleMenu() {
+        const sidebar = document.getElementById('sidebar');
+        const isOpen = sidebar.style.left === '0px';
+        sidebar.style.left = isOpen ? '-250px' : '0px'; // Скрываем/показываем меню
+        document.body.style.marginLeft = isOpen ? '0' : '250px'; // Сдвигаем контент
+    }
+</script>
+
+</body>
+</html>
