@@ -15,12 +15,12 @@
         <div class="link-card">
             <h2>Вход</h2>
             <p>Перейдите на страницу для входа в личный кабинет.</p>
-            <a href="login.html">Перейти</a>
+            <a href="{% url "users:login"%}">Перейти</a>
         </div>
         <div class="link-card">
             <h2>Личный кабинет</h2>
             <p>Здесь вы можете управлять своим профилем и получать информацию.</p>
-            <a href="profile.html">Перейти</a>
+            <a href="{% url "users:profile"%}">Перейти</a>
         </div>
         <div class="link-card">
             <h2>Расписание</h2>
