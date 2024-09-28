@@ -6,7 +6,8 @@
 <div class="main-content-login">
     <div class="login-container">
         <h1>Вход в систему</h1>
-        <form>
+        <form action="{% url "user:login" %}" method="post">
+            {% csrf_token %}
             <div class="input-group">
                 <label for="username">Логин</label>
                 <input type="text" id="username" name="username" required>
@@ -17,9 +18,9 @@
             </div>
             <button type="submit" style="background-color: var(--random-color);" class="login-button">Войти</button>
         </form>
-        <div class="signup-prompt">
-            Нет аккаунта? <a href="{% url "users:registration"%}" style="color: var(--random-color);" class="signup-link">Создайте аккаунт</a>
-        </div>
+<!--        <div class="signup-prompt">-->
+<!--            Нет аккаунта? <a href="#" style="color: var(&#45;&#45;random-color);" class="signup-link">Создайте аккаунт</a>-->
+<!--        </div>-->
     </div>
 </div>
 {% endblock %}

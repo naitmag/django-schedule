@@ -4,7 +4,8 @@ from django.db import models
 
 class Group(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name='Название')
-    number = models.CharField(max_length=15, unique=True, verbose_name='Группа')
+    number = models.PositiveIntegerField(unique=True, verbose_name='Группа')
+    specialization = models.CharField(max_length=150, unique=True, verbose_name='Специализация')
     faculty = models.CharField(max_length=150, blank=False, null=False, verbose_name='Факультет')
 
     class Meta:
@@ -30,3 +31,4 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"[{self.pk}] {self.username}"
+
