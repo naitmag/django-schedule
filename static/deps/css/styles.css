@@ -93,6 +93,109 @@
             justify-content: center;
             padding: 80px 20px;
         }
+        .register-container {
+            width: 600px;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            padding-left: 60px;
+            padding-right: 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-container h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            margin-left: 20px
+        }
+
+        .input-group-register {
+            margin-bottom: 20px;
+            text-align: left;
+            width: 100%;
+            margin-left: 20px
+        }
+
+        .input-group-register label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .input-group-register input,
+        .input-group-register select {
+            width: calc(85% - 10px);
+            padding: 15px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-group-register input:focus,
+        .input-group-register select:focus {
+            border-color: #90be6d;
+            box-shadow: 0 0 5px rgba(144, 190, 109, 0.5);
+            outline: none;
+        }
+
+        .input-pair {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Центрирование галочки */
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+
+        .register-button {
+            width: 100%;
+            background-color: #ccc;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: not-allowed;
+            font-size: 18px;
+            transition: background 0.3s, transform 0.2s;
+            font-weight: bold;
+        }
+
+        .register-button.active {
+            background-color: #90be6d;
+            cursor: pointer;
+        }
+
+        .register-button.active:hover {
+            background-color: #1d3557;
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: grey;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .validation-message {
+            font-size: 14px;
+            color: grey;
+            margin-top: 10px;
+            display: none; /* Скрыто по умолчанию */
+        }
+
         /* Заголовок главной страницы */
         .main-title {
             font-size: 36px;
@@ -195,6 +298,11 @@
             width: 250px;
             transition: transform 0.3s;
             text-align: center;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column; /* Устанавливаем вертикальную ориентацию */
+            justify-content: space-between; /* Разделяем содержимое карточки */
+            height: 150px; /* Задайте фиксированную высоту карточки, если нужно */
         }
 
         .link-card:hover {
@@ -215,15 +323,18 @@
         }
 
         /* Стили для ссылок в карточках */
-        .link-card a {
+        .link-card p.action {
+            font-size: 18px;
             text-decoration: none;
             color: #333;
             transition: color 0.3s;
+            margin-top: auto; /* Отодвигает текст вниз в карточке */
         }
 
-        .link-card a:hover {
+        .link-card p.action:hover {
             color: #1d3557;
         }
+
 
         .login-container {
             width: 100%;

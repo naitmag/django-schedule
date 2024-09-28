@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content%}
+
+<!-- Основной блок с содержимым -->
+<div class="main-content-login">
+    <div class="register-container">
+        <h1>Регистрация</h1>
+        <form id="register-form" action="{% url "user:registration" %}" method="post">
+            {%csrf_token%}
+            <div class="input-pair">
+                <div class="input-group-register">
+                    <label for="last-name">Фамилия*</label>
+                    <input type="text" id="last-name" name="last-name" required>
+                </div>
+                <div class="input-group-register">
+                    <label for="first-name">Имя*</label>
+                    <input type="text" id="first-name" name="first-name" required>
+                </div>
+            </div>
+            <div class="input-pair">
+                <div class="input-group-register">
+                    <label for="middle-name">Отчество</label>
+                    <input type="text" id="middle-name" name="middle-name">
+                </div>
+                <div class="input-group-register">
+                    <label for="username">Имя пользователя*</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+            </div>
+            <div class="input-pair">
+                <div class="input-group-register">
+                    <label for="email">Адрес электронной почты*</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-group-register">
+                    <label for="phone">Номер телефона</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+            </div>
+            <div class="input-pair">
+                <div class="input-group-register">
+                    <label for="password">Пароль*</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="input-group-register">
+                    <label for="confirm-password">Повторите пароль*</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                </div>
+            </div>
+            <div class="input-group-register">
+                <label for="group">Группа*</label>
+                <select id="group" name="group" required>
+                    <option value="">Выберите группу</option>
+                    <option value="group1">Группа 1</option>
+                    <option value="group2">Группа 2</option>
+                    <option value="group3">Группа 3</option>
+                </select>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="data-agreement" name="data-agreement" required>
+                <label for="data-agreement">Согласен на обработку персональных данных</label>
+            </div>
+            <button type="submit" id="register-button" class="register-button">Зарегистрироваться</button>
+        </form>
+        <div id="validation-message" class="validation-message"></div>
+        <div class="signup-prompt">
+            Есть аккаунт? <a href="{% url "users:login"%}" style="color: var(--random-color);" class="signup-link">Войти</a>
+        </div>
+    </div>
+</div>
+<script src="{% static "deps/js/registration.js"%}" defer></script>
+
+{% endblock %}

@@ -1,48 +1,33 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профиль</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/script.js" defer></script>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
 
-<!-- Выезжающее боковое меню -->
-<div class="sidebar" id="sidebar">
-    <a href="index.html">Главная</a>
-    <a href="login.html">Вход</a>
-    <a href="profile.html">Личный кабинет</a>
-    <a href="schedule.html">Расписание</a>
-    <a href="teacher.html">Преподаватели</a>
-</div>
-
-<!-- Верхняя панель -->
-<div class="header">
-    <span class="menu-icon" onclick="toggleMenu()">☰</span>
-    Профиль
-</div>
-
+{% block content %}
 <!-- Основной блок с содержимым -->
 <div class="main-content-profile">
     <div class="profile-container">
         <div class="user-info">
             <div class="profile-pic">
-                <img src="images/custom-photo.jpg" alt="Фото пользователя"
+                {% if user.image %}
+                <img src="{{ user.image.url }}" alt="Фото пользователя"
                      style="width: 100%; height: 100%; border-radius: 10px;">
+                {% else %}
+                <img src="{% static "deps/images/profile-photo.jpg"%}" alt="Фото пользователя"
+                     style="width: 100%; height: 100%; border-radius: 10px;">
+                {% endif %}
             </div>
 
             <div class="user-details">
-                <h2>Ярмолович Михаил Васильевич</h2> <!-- ФИО -->
-                <span class="group-number" style="background-color: var(--random-color);">Группа: 308</span>
+                <h2>{{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</h2> <!-- ФИО -->
+                <span class="group-number" style="background-color: var(--random-color);">Группа: {{ user.group.number }}</span>
                 <!-- Номер группы -->
                 <span class="status-container">
                     <p class="status on-lesson">На занятии</p> <!-- Статус -->
                 </span>
             </div>
         </div>
-
+        {%if request.user == user%}
+        <h4 align="center">Редактировать профиль</h4>
+        {% endif %}
         <!-- Карточка с занятием -->
         <div class="lesson-card">
             <h3>Текущее занятие</h3>
@@ -58,15 +43,16 @@
         <!-- Условие для отображения статуса занятия -->
         <div class="profile-data">
             <h3>Информация</h3>
-            <p><strong>Факультет:</strong> Факультет культурологии и социально-культурной деятельности (ФКиСКД)</p>
-            <p><strong>Кафедра:</strong> Кафедра информационных технологий в культуре (КИТК)</p>
-            <p><strong>Курс:</strong> 3 курс</p>
+            <p><strong>Факультет: </strong>{{ user.group.faculty }}</p>
+            <p><strong>Кафедра: </strong> {{ user.group.name }}</p>
+            <p><strong>Специализация: </strong> {{user.group.specialization}} ({{ user.group.number }})</p>
+            <p><strong>Курс: </strong> {{user.course}} курс</p>
         </div>
 
         <div class="contact-info">
             <h3>Контакты</h3>
-            <p><strong>Телефон:</strong> +375 (29) 123-45-67</p>
-            <p><strong>Email:</strong> ymv@example.com</p>
+            <p><strong>Телефон: </strong>{% if user.phone %}{{ user.phone }}{% else %} - {% endif %}</p>
+            <p><strong>Email: </strong>{{ user.email }}</p>
             <div class="social-links">
                 <span class="social-button" style="background-color: var(--random-color);"><a
                         href="#">Telegram</a></span>
@@ -78,10 +64,4 @@
         </div>
     </div>
 </div>
-
-<!-- Футер -->
-<div class="footer">
-    &copy; 2024 Все права защищены
-</div>
-</body>
-</html>
+{% endblock %}
