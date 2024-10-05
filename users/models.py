@@ -4,7 +4,7 @@ from django.db import models
 
 class Group(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name='Название')
-    number = models.PositiveIntegerField(unique=True, verbose_name='Группа')
+    number = models.CharField(max_length=10, unique=True, verbose_name='Группа')
     specialization = models.CharField(max_length=150, unique=True, verbose_name='Специализация')
     faculty = models.CharField(max_length=150, blank=False, null=False, verbose_name='Факультет')
 

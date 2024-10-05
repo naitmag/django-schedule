@@ -2,7 +2,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView, DetailView
@@ -42,7 +42,11 @@ class UserProfileView(LoginRequiredMixin, DetailView):
         if not kwarg:
             return self.request.user
 
-        user = User.objects.get(id=kwarg)
+        try:
+            user = User.objects.get(id=kwarg)
+        except User.DoesNotExist:
+            raise Http404("User does not exist")
+
         return user
 
     def get_context_data(self, **kwargs):
