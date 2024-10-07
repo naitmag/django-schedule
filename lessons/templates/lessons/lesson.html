@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<!-- Основной блок с содержимым -->
+<div class="main-content">
+    <div class="lesson-card">
+        <h1 class="lesson-title" align="center">{{ lesson.lesson_type }} {{ lesson.name }}</h1>
+
+        <table>
+            <tr>
+                <th style="background-color: var(--random-color);">Параметр</th>
+                <th style="background-color: var(--random-color);">Значение</th>
+            </tr>
+            <tr>
+                <td><b>Тип</b></td>
+                <td>{{ lesson.get_lesson_type }}</td>
+            </tr>
+            <tr>
+                <td><b>Промежуток недель</b></td>
+                <td>{{lesson.start}}-{{lesson.end}}</td>
+            </tr>
+            <tr>
+                <td><b>День недели</b></td>
+                <td>{{ lesson.get_day_name }}</td>
+            </tr>
+            <tr>
+                <td><b>Время</b></td>
+                <td>{{ lesson.get_time }}</td>
+            </tr>
+
+            <tr>
+                <td><b>Преподаватель</b></td>
+                 <td>{{ lesson.teacher }}</td>
+            </tr>
+            <tr>
+                <td><b>Подгруппа</b></td>
+                <td>{{ lesson.subgroup|default_if_none:'-'}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="lesson-card">
+        <h2 class="suggestion-title">Лекции от преподавателя: {{lesson.teacher}}</h2>
+        {% for related_lesson in related_lessons%}
+        <div class="suggestion-item"><a href="{% url "lessons:lesson" related_lesson.id%}">{{ related_lesson.get_time }} {{ related_lesson.lesson_type }} {{ related_lesson.name }}</a></div>
+        {% endfor %}
+    </div>
+
+    <button class="main-button" style="background-color: var(--random-color); onclick="location.href='schedule.html'">Вернуться к расписанию</button>
+</div>
+{% endblock %}
