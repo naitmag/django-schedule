@@ -48,7 +48,8 @@
         <div class="suggestion-item"><a href="{% url "lessons:lesson" related_lesson.id%}">{{ related_lesson.get_time }} {{ related_lesson.lesson_type }} {{ related_lesson.name }}</a></div>
         {% endfor %}
     </div>
-
-    <button class="main-button" style="background-color: var(--random-color); onclick="location.href='schedule.html'">Вернуться к расписанию</button>
+    <div style="padding: 20px;">
+        <a class="main-button" style="background-color: var(--random-color);" href="{% url "lessons:schedule"%}">Вернуться к расписанию</a>
+    </div>
 </div>
 {% endblock %}

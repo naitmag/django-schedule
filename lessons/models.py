@@ -2,6 +2,52 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from users.models import Group
+from lessons.constants import START_LESSONS_DATE
+from datetime import date
+
+
+class Week:
+    def __init__(self, number: int, group: Group = None, teacher: str = None):
+        self.number = number
+        self.group = group
+        self.teacher = teacher
+        if self.group:
+            self.lessons = Lesson.objects.filter(group_id=group.pk, start__lte=number, end__gte=number)
+        else:
+            self.lessons = Lesson.objects.filter(teacher__icontains=teacher, start__lte=number, end__gte=number)
+
+    @staticmethod
+    def get_current_week():
+        current_date = date.today()
+        days_difference = current_date.day - START_LESSONS_DATE.day
+        current_week = days_difference + 1 // 7
+        return current_week
+
+    def get_schedule_json(self):
+        response_data = {
+            'schedule': [],
+            'current_week': self.get_current_week()
+        }
+
+        for i in range(len(Lesson.DAYS)):
+            content = {
+                'title': Lesson.DAYS[i][1],
+                'lessons': []
+            }
+            for lesson in self.lessons:
+                if i == lesson.day:
+                    value = {
+                        'id': lesson.pk,
+                        'timeSlot': lesson.get_time(),
+                        'lesson_type': lesson.lesson_type,
+                        'title': lesson.name,
+                        'subgroup': lesson.subgroup,
+                        'teacher': lesson.teacher
+                    }
+                    content['lessons'].append(value)
+            response_data['schedule'].append(content)
+
+        return response_data
 
 
 class Lesson(models.Model):
