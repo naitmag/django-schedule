@@ -5,7 +5,8 @@ from django.http import JsonResponse
 from django.views import View
 from django.views.generic import ListView, DetailView
 
-from lessons.models import Lesson
+from lessons.models import Lesson, Week
+from users.models import Group
 
 
 # Create your views here.
@@ -41,26 +42,16 @@ class LessonView(DetailView):
 
 class GetWeekScheduleView(View):
     def get(self, request):
-        week_number = request.GET.get("week_number")
+        week_number = request.GET.get("week") or Week.get_current_week()
+        teacher = request.GET.get("teacher")
 
-        lessons = Lesson.objects.filter(start__lte=week_number, end__gte=week_number)
+        if not teacher:
+            group_id = request.GET.get("group_id") or self.request.user.group.pk
+            group = Group.objects.get(id=group_id)
+            week = Week(week_number, group=group)
+        else:
+            week = Week(week_number, teacher=teacher)
 
-        schedule = defaultdict(lambda: defaultdict(list))
-
-        for lesson in lessons:
-            schedule[lesson.get_day_name()][lesson.get_time()].append({
-                'id': lesson.pk,
-                'lesson_type': lesson.lesson_type,
-                'name': lesson.name,
-                'teacher': lesson.teacher,
-                'subgroup': lesson.subgroup,
-            })
-        #temp value
-        max_week = 20
-
-        response_data = {
-            'schedule': dict(schedule),
-            'max_week': max_week
-        }
+        response_data = week.get_schedule_json()
 
         return JsonResponse(response_data)
