@@ -3,9 +3,10 @@ from collections import defaultdict
 from django.db.models import QuerySet
 from django.http import JsonResponse
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 
 from lessons.models import Lesson, Week
+from lessons.services.excel_reader import save_lessons
 from users.models import Group
 
 
@@ -55,3 +56,13 @@ class GetWeekScheduleView(View):
         response_data = week.get_schedule_json()
 
         return JsonResponse(response_data)
+
+class UploadExcelView(TemplateView):
+    template_name = 'lessons/upload.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Загрузка занятий'
+        context['read_result'] = save_lessons()
+        return context
+

@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     cardHeader.classList.add('sunday');
                     break;
             }
-            cardHeader.textContent = day.title; // Здесь присваивается текст заголовка
+            cardHeader.textContent = `${day.title} (${day.date})`; // Присваиваем название дня и дату
             dayCard.appendChild(cardHeader);
 
             // Тело карточки с занятиями
