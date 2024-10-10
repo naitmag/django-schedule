@@ -5,7 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from users.models import Group
-from lessons.constants import START_LESSONS_DATE
+from lessons.constants import START_LESSONS_DATE, DEFAULT_MAX_WEEK
 from datetime import datetime, timedelta
 
 
@@ -14,17 +14,18 @@ class Week:
         self.number = number
         self.group = group
         self.teacher = teacher
-        self.date = START_LESSONS_DATE + timedelta(weeks=int(self.number)-1)
+        self.date = START_LESSONS_DATE + timedelta(weeks=int(self.number) - 1)
         if self.group:
             self.lessons = Lesson.objects.filter(group_id=group.pk, start__lte=number, end__gte=number)
         else:
             self.lessons = Lesson.objects.filter(teacher__icontains=teacher, start__lte=number, end__gte=number)
+        self.lessons = self.lessons.order_by('number')
 
     @staticmethod
     def get_current_week():
         current_date = datetime.now().date()
         difference = current_date - START_LESSONS_DATE
-        current_week = (difference.days + 1) // 7 +1
+        current_week = (difference.days + 1) // 7 + 1
         return current_week
 
     def get_schedule_json(self):
@@ -97,7 +98,6 @@ class LessonRecord:
 
     @staticmethod
     def parse_lesson(entry):
-        default_max_week = 17
 
         class ArgTypes(Enum):
             WEEKS = 0
@@ -150,7 +150,7 @@ class LessonRecord:
                 else:
                     result['teacher'].append(arg)
         if not result['weeks']:
-            result['weeks'].append(f'1-{default_max_week}')
+            result['weeks'].append(f'1-{DEFAULT_MAX_WEEK}')
         if not result['types']:
             result['types'].append('-')
         return result

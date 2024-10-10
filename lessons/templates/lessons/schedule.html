@@ -6,11 +6,22 @@
 
 <!-- Основной блок с карточками расписания -->
 <div class="schedule-control">
+    {% if group and request.user.group.number != group %}
     <div id="group-notification" class="notification">
         <p class="alert"><h4>Вы просматриваете расписание другой группы!</h4></p>
     </div>
+    {% endif %}
+    {% if teacher %}
+    <div id="group-notification" class="notification">
+        <p class="alert"><h4>Вы просматриваете расписание преподавателя.</h4></p>
+    </div>
+    {% endif %}
     <div class="group-info">
-        <span>Расписание для группы: <strong> {{request.user.group.number}}</strong></span>
+        {% if teacher %}
+        <span>Расписание преподавателя: <strong> {{teacher}}</strong></span>
+        {% else %}
+        <span>Расписание для группы: <strong>{% if group %}{{ group }}{% else %}{{ request.user.group.number }}{% endif %}</strong></span>
+        {% endif%}
     </div>
     <div class="week-info">
         <span>Учебная неделя: <strong id="current-week">1</strong></span>

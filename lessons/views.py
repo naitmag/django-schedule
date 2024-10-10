@@ -1,6 +1,3 @@
-from collections import defaultdict
-
-from django.db.models import QuerySet
 from django.http import JsonResponse
 from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView
@@ -14,13 +11,17 @@ from users.models import Group
 class ScheduleView(ListView):
     model = Lesson
     template_name = "lessons/schedule.html"
-    context_object_name = "lesson"
+    context_object_name = "lessons"
 
     def get_queryset(self):
         return
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        query_params = self.request.GET
+
+        context["group"] = query_params.get('group')
+        context["teacher"] = query_params.get('teacher')
         context["title"] = "Расписание"
         return context
 
@@ -47,8 +48,12 @@ class GetWeekScheduleView(View):
         teacher = request.GET.get("teacher")
 
         if not teacher:
-            group_id = request.GET.get("group_id") or self.request.user.group.pk
-            group = Group.objects.get(id=group_id)
+            group_number = request.GET.get('group')
+            if group_number:
+                group = Group.objects.get(number=group_number)
+            else:
+                group_id = request.GET.get("group_id") or self.request.user.group.pk
+                group = Group.objects.get(id=group_id)
             week = Week(week_number, group=group)
         else:
             week = Week(week_number, teacher=teacher)
@@ -56,6 +61,7 @@ class GetWeekScheduleView(View):
         response_data = week.get_schedule_json()
 
         return JsonResponse(response_data)
+
 
 class UploadExcelView(TemplateView):
     template_name = 'lessons/upload.html'
@@ -65,4 +71,3 @@ class UploadExcelView(TemplateView):
         context['title'] = 'Загрузка занятий'
         context['read_result'] = save_lessons()
         return context
-
