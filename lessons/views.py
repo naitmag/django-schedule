@@ -1,3 +1,5 @@
+import traceback
+
 from django.http import JsonResponse
 from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView
@@ -18,10 +20,14 @@ class ScheduleView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        query_params = self.request.GET
+        teacher = self.request.GET.get('teacher')
+        group = self.request.GET.get('group')
 
-        context["group"] = query_params.get('group')
-        context["teacher"] = query_params.get('teacher')
+        if teacher and group:
+            group = None
+
+        context["teacher"] = teacher
+        context["group"] = group
         context["title"] = "Расписание"
         return context
 
@@ -49,11 +55,14 @@ class GetWeekScheduleView(View):
 
         if not teacher:
             group_number = request.GET.get('group')
-            if group_number:
-                group = Group.objects.get(number=group_number)
-            else:
-                group_id = request.GET.get("group_id") or self.request.user.group.pk
-                group = Group.objects.get(id=group_id)
+            try:
+                if group_number:
+                    group = Group.objects.get(number=group_number)
+                else:
+                    group_id = request.GET.get("group_id") or self.request.user.group.pk
+                    group = Group.objects.get(id=group_id)
+            except Group.DoesNotExist:
+                return JsonResponse({})
             week = Week(week_number, group=group)
         else:
             week = Week(week_number, teacher=teacher)
@@ -65,9 +74,22 @@ class GetWeekScheduleView(View):
 
 class UploadExcelView(TemplateView):
     template_name = 'lessons/upload.html'
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        file_name = self.request.GET.get('file')
+
         context['title'] = 'Загрузка занятий'
-        context['read_result'] = save_lessons()
+        try:
+            file_name += '.xlsx'
+            save_lessons(file_name)
+        except TypeError:
+            context['result'] = "Ошибка при загрузке занятий:"
+            context['description'] = "Имя файла не должно быть пустым."
+        except Exception as _ex:
+            traceback.print_exc()
+            context['result'] = "Ошибка при загрузке занятий:"
+            context['description'] = _ex
+        else:
+            context['result'] = 'Занятия успешно загружены!'
+
         return context

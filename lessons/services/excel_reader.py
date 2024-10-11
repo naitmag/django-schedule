@@ -2,9 +2,6 @@ import pandas as pd
 from typing import Any
 
 from lessons.models import LessonRecord
-from schedule.settings import BASE_DIR
-
-EXCEL_DATA_PATH = BASE_DIR / 'data.xlsx'
 
 
 def read_excel_data(file_path: str):
@@ -42,7 +39,6 @@ def read_excel_data(file_path: str):
             item = target_step[i]
             if item:
                 if i >= len(target_step) - 2:
-                    print(item)
                     group_number = 0
                 else:
                     schedule[groups[group_number]].append(f"{lesson_day} {lesson_number} {item}")
@@ -53,8 +49,8 @@ def read_excel_data(file_path: str):
     return groups, schedule
 
 
-def save_lessons():
-    groups, schedule = read_excel_data(EXCEL_DATA_PATH)
+def save_lessons(file_name: str):
+    groups, schedule = read_excel_data(file_name)
 
     for group in groups:
         result = schedule[group]
@@ -64,3 +60,5 @@ def save_lessons():
             result = record.get_list()
             for lesson in result:
                 lesson.save()
+
+    print("LESSONS SAVED!")

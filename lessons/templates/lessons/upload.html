@@ -2,5 +2,8 @@
 {% load static %}
 
 {% block content %}
-{{ read_result }}
+<div class="main-content">
+    <h1 class="main-title">{{result}}</h1>
+    <p class="main-description">{{description}}</p>
+</div>
 {% endblock %}

@@ -124,11 +124,11 @@ class LessonRecord:
             lessons_types = ['лаб.', 'пр.', 'л.', 'сем.']
             if '.' in arg and arg.replace(',', '') in lessons_types:
                 return ArgTypes.LESSON_TYPE.value
-            if len(arg) == 4 and arg.upper() == arg and '.' in arg:
+            if 4 == len(arg) == 5 and arg.upper() == arg and '.' in arg:
                 return ArgTypes.TEACHER.value
             if '(' in arg or ')' in arg:
                 return ArgTypes.SUBGROUP.value
-            if arg.upper() == arg:
+            if arg.upper() == arg and not '.' in arg:
                 return ArgTypes.NAME.value
 
         search_types = True
