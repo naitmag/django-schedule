@@ -51,7 +51,9 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Личный кабинет'
+
+        title = 'Личный кабинет' if not self.kwargs.get(self.id_kwarg) else self.object.get_full_name()
+        context['title'] = title
 
         return context
 
@@ -84,4 +86,28 @@ class GroupsListView(ListView):
         context = super().get_context_data(**kwargs)
 
         context["title"] = "Список групп"
+        return context
+
+
+class GroupPageView(DetailView):
+    template_name = 'users/group_page.html'
+    number_kwarg = "group_number"
+
+    def get_object(self, queryset=None):
+        kwarg = self.kwargs.get(self.number_kwarg)
+        if not kwarg:
+            return self.request.user.group
+
+        try:
+            group = Group.objects.get(number=kwarg)
+        except Group.DoesNotExist:
+            raise Http404("Group does not exist")
+
+        return group
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f"Группа {self.object.number}"
+        context['students'] = User.objects.filter(group__number=self.object.number)
+
         return context

@@ -19,14 +19,16 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from users.views import GroupsListView
+from users.views import GroupsListView, GroupPageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls', namespace='main')),
     path('user/', include('users.urls', namespace='user')),
     path('schedule/', include('lessons.urls', namespace='lessons')),
-    path('groups/', GroupsListView.as_view(), name='groups')
+    path('groups/<str:group_number>', GroupPageView.as_view(), name='group_page'),
+    path('groups/', GroupsListView.as_view(), name='groups'),
+
 ]
 
 if settings.DEBUG:

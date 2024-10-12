@@ -5,13 +5,15 @@
 <!-- Основной контент -->
 <div class="main-content">
     <h1 class="page-title">Выберите группу</h1>
-    <p class="main-description">Всего групп:</p>
+    <p class="main-description">Всего групп: {{groups.count}}</p>
     <div class="profile-group-cards-container">
       {% for group in groups%}
   <div class="profile-group-card">
-    <a href="#" class="card-content">
+    <a href="{% url "group_page" group.number %}" class="card-content">
       <h2 class="group-title">Группа {{group.number}}</h2>
+      <p class="group-info"><strong>Кафедра</strong></p>
       <p class="group-info">{{ group.department}}</p>
+      <p class="group-info"><strong>Специализация</strong></p>
       <p class="group-info">{{ group.specialization}}</p>
     </a>
     <a href="{% url "lessons:schedule" %}?group={{group.number}}" class="schedule-button" style="background-color: var(--random-color);">Просмотреть расписание</a>
