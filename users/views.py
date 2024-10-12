@@ -5,10 +5,10 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, UpdateView, DetailView
+from django.views.generic import TemplateView, UpdateView, DetailView, ListView
 
 from users.forms import UserLoginForm
-from users.models import User
+from users.models import User, Group
 
 
 class UserLoginView(LoginView):
@@ -69,3 +69,19 @@ class UserRegistrationView(TemplateView):
 def logout(request):
     auth.logout(request)
     return redirect(reverse('main:index'))
+
+
+class GroupsListView(ListView):
+    model = Group
+    template_name = "users/groups.html"
+    context_object_name = "groups"
+
+    def get_queryset(self):
+        groups = super().get_queryset()
+        return groups
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["title"] = "Список групп"
+        return context
