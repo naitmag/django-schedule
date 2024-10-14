@@ -1,11 +1,11 @@
-from collections import defaultdict
+import traceback
 
-from django.db.models import QuerySet
 from django.http import JsonResponse
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 
 from lessons.models import Lesson, Week
+from lessons.services.excel_reader import save_lessons
 from users.models import Group
 
 
@@ -13,13 +13,21 @@ from users.models import Group
 class ScheduleView(ListView):
     model = Lesson
     template_name = "lessons/schedule.html"
-    context_object_name = "lesson"
+    context_object_name = "lessons"
 
     def get_queryset(self):
         return
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        teacher = self.request.GET.get('teacher')
+        group = self.request.GET.get('group')
+
+        if teacher and group:
+            group = None
+
+        context["teacher"] = teacher
+        context["group"] = group
         context["title"] = "Расписание"
         return context
 
@@ -46,8 +54,15 @@ class GetWeekScheduleView(View):
         teacher = request.GET.get("teacher")
 
         if not teacher:
-            group_id = request.GET.get("group_id") or self.request.user.group.pk
-            group = Group.objects.get(id=group_id)
+            group_number = request.GET.get('group')
+            try:
+                if group_number:
+                    group = Group.objects.get(number=group_number)
+                else:
+                    group_id = request.GET.get("group_id") or self.request.user.group.pk
+                    group = Group.objects.get(id=group_id)
+            except Group.DoesNotExist:
+                return JsonResponse({})
             week = Week(week_number, group=group)
         else:
             week = Week(week_number, teacher=teacher)
@@ -55,3 +70,26 @@ class GetWeekScheduleView(View):
         response_data = week.get_schedule_json()
 
         return JsonResponse(response_data)
+
+
+class UploadExcelView(TemplateView):
+    template_name = 'lessons/upload.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        file_name = self.request.GET.get('file')
+
+        context['title'] = 'Загрузка занятий'
+        try:
+            file_name += '.xlsx'
+            save_lessons(file_name)
+        except TypeError:
+            context['result'] = "Ошибка при загрузке занятий:"
+            context['description'] = "Имя файла не должно быть пустым."
+        except Exception as _ex:
+            traceback.print_exc()
+            context['result'] = "Ошибка при загрузке занятий:"
+            context['description'] = _ex
+        else:
+            context['result'] = 'Занятия успешно загружены!'
+
+        return context

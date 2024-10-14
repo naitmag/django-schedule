@@ -18,7 +18,10 @@
     {% else %}
     <a href="{% url "users:profile" %}">Личный кабинет</a>
     {% endif %}
+    {% if user.is_authenticated %}
     <a href="{% url "lessons:schedule"%}">Расписание</a>
+    {% endif %}
+    <a href="{% url "groups"%}">Группы</a>
     <a href="teacher.html">Преподаватели</a>
     {% if user.is_admin or user.is_staff %}
     <a href="{% url "admin:index" %}">Админ-панель</a>

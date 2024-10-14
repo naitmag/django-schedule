@@ -17,6 +17,27 @@
 
     <!-- Блок с ссылками -->
     <div class="link-block">
+
+        {% if user.is_authenticated %}
+        <a href="{% url "lessons:schedule"%}" class="link-card">
+            <h2>Расписание</h2>
+            <p>Посмотрите расписание занятий на текущую неделю.</p>
+            <p class="action">Перейти</p>
+        </a>
+        {% endif %}
+        <a href="{% url "groups" %}" class="link-card">
+            <h2>Группы</h2>
+            <p>Просмотрите список групп и их расписание.</p>
+            <p class="action">Перейти</p>
+        </a>
+        <a href="#" class="link-card">
+            <h2>Преподаватели</h2>
+            <p>Узнайте больше о преподавателях и их курсах.</p>
+            <p class="action">Перейти</p>
+        </a>
+    </div>
+
+    <div class="link-block">
         {% if not user.is_authenticated %}
         <a href="{% url "users:login"%}" class="link-card">
         <h2>Вход</h2>
@@ -30,16 +51,6 @@
         <p class="action">Перейти</p>
         </a>
         {% endif %}
-        <a href="{% url "lessons:schedule"%}" class="link-card">
-            <h2>Расписание</h2>
-            <p>Посмотрите расписание занятий на текущую неделю.</p>
-            <p class="action">Перейти</p>
-        </a>
-        <a href="#" class="link-card">
-            <h2>Преподаватели</h2>
-            <p>Узнайте больше о преподавателях и их курсах.</p>
-            <p class="action">Перейти</p>
-        </a>
         {% if user.is_authenticated %}
         <a href="{% url "users:logout" %}" class="link-card">
         <h2>Выход</h2>
@@ -47,7 +58,7 @@
         <p class="action">Перейти</p>
         </a>
         {% endif %}
-    </div>
+        </div>
 
 
 </div>

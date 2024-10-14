@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Основной блок с информацией о группе -->
+<div class="main-content-group">
+    <div class="group-info-container">
+        <div class="group-header">
+            <h2>Группа {{group.number}}</h2>
+            <span class="group-number" style="background-color: var(--random-color);">Курс: {{group.course}}</span>
+        </div>
+
+        <div class="group-details">
+            <p><strong>Факультет:</strong></p>
+            <p>{{group.faculty}}</p>
+            <p><strong>Кафедра:</strong></p>
+            <p>{{group.department}}</p>
+            <p><strong>Специализация:</strong></p>
+            <p>{{group.specialization}}</p>
+        </div>
+
+        <div class="student-list">
+            <h3>Список студентов</h3>
+            <div class="student-card-container">
+                <!-- Пример карточки студента -->
+                {% for student in students%}
+                <a href="{% url "users:profile" student.id %}" class="student-card">
+                    <div class="student-card-content">
+                        <span class="student-name">{{student.last_name}} {{student.first_name}}</span>
+                    </div>
+                </a>
+                {% endfor %}
+                <!-- Добавить другие карточки для студентов -->
+            </div>
+            <div class="group-schedule-link">
+                <a href="{% url "lessons:schedule" %}?group={{group.number}}" class="main-button" style="background-color: var(--random-color);">Перейти к расписанию</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
