@@ -7,6 +7,7 @@ from django.views.generic import ListView, DetailView, TemplateView
 from lessons.models import Lesson, Week
 from lessons.services.excel_reader import save_lessons
 from users.models import Group
+from utils.string_loader import StringLoader
 
 
 # Create your views here.
@@ -28,7 +29,7 @@ class ScheduleView(ListView):
 
         context["teacher"] = teacher
         context["group"] = group
-        context["title"] = "Расписание"
+        context["title"] = StringLoader.get_string('lessons.schedule.title')
         return context
 
 
@@ -74,22 +75,23 @@ class GetWeekScheduleView(View):
 
 class UploadExcelView(TemplateView):
     template_name = 'lessons/upload.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         file_name = self.request.GET.get('file')
 
-        context['title'] = 'Загрузка занятий'
+        context['title'] = StringLoader.get_string('lessons.upload.title')
         try:
             file_name += '.xlsx'
             save_lessons(file_name)
         except TypeError:
-            context['result'] = "Ошибка при загрузке занятий:"
-            context['description'] = "Имя файла не должно быть пустым."
+            context['result'] = StringLoader.get_string('lessons.upload.error')
+            context['description'] = StringLoader.get_string('lessons.upload.type_error')
         except Exception as _ex:
             traceback.print_exc()
-            context['result'] = "Ошибка при загрузке занятий:"
+            context['result'] = StringLoader.get_string('lessons.upload.error')
             context['description'] = _ex
         else:
-            context['result'] = 'Занятия успешно загружены!'
+            context['result'] = StringLoader.get_string('lessons.upload.success')
 
         return context

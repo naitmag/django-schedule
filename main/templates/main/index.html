@@ -6,10 +6,8 @@
 <!-- Основной блок с содержимым -->
 <div class="main-content">
     <h1 class="main-title">Добро пожаловать{% if user.is_authenticated%}, {{user.first_name}}{%endif%}!</h1>
-    <p class="main-description">Это ваша платформа для отслеживания расписания занятий и информации о
-        преподавателях.<br>
-        Система находится на стадии разработки. Будем рады услышать любую обратную связь!<br>
-        <a class="social-links signup-link" href="mailto:email-example@gmail.com">email-example@gmail.com</a>
+    <p class="main-description">{{ text }}<br>
+        <a class="social-links signup-link" href="mailto:{{email}}">{{email}}</a>
     </p>
 
     <!-- Разделение между текстом и карточками -->
