@@ -1,5 +1,5 @@
 import datetime
-from enum import Enum
+from enum import Enum, auto
 
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -100,11 +100,11 @@ class LessonRecord:
     def parse_lesson(entry):
 
         class ArgTypes(Enum):
-            WEEKS = 0
-            LESSON_TYPE = 1
-            NAME = 2
-            TEACHER = 3
-            SUBGROUP = 4
+            WEEKS = auto()
+            LESSON_TYPE = auto()
+            NAME = auto()
+            TEACHER = auto()
+            SUBGROUP = auto()
 
         result = {
             'day': entry[0],
@@ -120,16 +120,16 @@ class LessonRecord:
         def detect_type(arg: str):
 
             if arg.replace(',', '').replace('-', '').isdigit():
-                return ArgTypes.WEEKS.value
+                return ArgTypes.WEEKS
             lessons_types = ['лаб.', 'пр.', 'л.', 'сем.']
             if '.' in arg and arg.replace(',', '') in lessons_types:
-                return ArgTypes.LESSON_TYPE.value
-            if 4 == len(arg) == 5 and arg.upper() == arg and '.' in arg:
-                return ArgTypes.TEACHER.value
+                return ArgTypes.LESSON_TYPE
+            if len(arg) in [4, 5] and arg.upper() == arg and '.' in arg:
+                return ArgTypes.TEACHER
             if '(' in arg or ')' in arg:
-                return ArgTypes.SUBGROUP.value
+                return ArgTypes.SUBGROUP
             if arg.upper() == arg and not '.' in arg:
-                return ArgTypes.NAME.value
+                return ArgTypes.NAME
 
         search_types = True
         for arg in entry[2:]:
@@ -138,14 +138,14 @@ class LessonRecord:
 
                 arg_type = detect_type(arg)
 
-                if arg_type == ArgTypes.WEEKS.value:
+                if arg_type is ArgTypes.WEEKS:
                     result['weeks'].append(arg)
-                elif search_types and arg_type == ArgTypes.LESSON_TYPE.value:
+                elif search_types and arg_type is ArgTypes.LESSON_TYPE:
                     result['types'].append(arg)
-                elif arg_type == ArgTypes.NAME.value:
+                elif arg_type is ArgTypes.NAME:
                     search_types = False
                     result['name'].append(arg)
-                elif arg_type == ArgTypes.SUBGROUP.value:
+                elif arg_type is ArgTypes.SUBGROUP:
                     result['subgroup'].append(arg)
                 else:
                     result['teacher'].append(arg)
