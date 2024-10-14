@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,14 +19,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
+env = Env()
+env.read_env()
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-i67g!p#9b*)6^k_$e5%vcv8v6!c1$1^qoh#$s1)yj7i3h#o_or'
+SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = []
+# Domain names
+DOMAIN_NAME = env.str('DOMAIN_NAME', default='localhost')
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    DOMAIN_NAME
+]
+CSRF_TRUSTED_ORIGINS = ['https://' + DOMAIN_NAME]
 
 # Application definition
 
