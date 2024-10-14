@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Функция для получения расписания и текущей недели
 function fetchSchedule() {
     // Формируем базовый URL
-    let url = '/schedule/get_schedule';
+    let url = '/schedule/get_schedule/';
 
     // Проверяем параметры group и teacher, добавляем их в запрос, если они существуют
     const params = [];
@@ -162,7 +162,7 @@ function updateSchedule(newWeek) {
     if (newWeek < 1 || newWeek > 20) return; // Проверка на диапазон
 
     // Формируем базовый URL
-    let url = `/schedule/get_schedule?week=${newWeek}`;
+    let url = `/schedule/get_schedule/?week=${newWeek}`;
 
     // Проверяем параметры group и teacher, добавляем их в запрос, если они существуют
     const params = [];

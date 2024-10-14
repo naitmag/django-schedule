@@ -124,6 +124,9 @@ MEDIA_URL = 'media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
+CONFIG_DIR = BASE_DIR / 'config'
+STRINGS_FILE = CONFIG_DIR / 'strings.yaml'
+
 INTERNAL_IPS = [
     # ...
     "127.0.0.1",
@@ -134,6 +137,9 @@ INTERNAL_IPS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Auth system constant values
+
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/user/login/'
 LOGIN_REDIRECT_URL = '/'

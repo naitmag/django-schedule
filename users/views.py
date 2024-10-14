@@ -9,13 +9,13 @@ from django.views.generic import TemplateView, UpdateView, DetailView, ListView
 
 from users.forms import UserLoginForm
 from users.models import User, Group
+from utils.string_loader import StringLoader
 
 
 class UserLoginView(LoginView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
 
-    # success_url = reverse_lazy('main:index')
     def get_success_url(self):
         redirect_page = self.request.POST.get('next', None)
         if redirect_page and redirect_page != reverse('user:logout'):
@@ -52,19 +52,19 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        title = 'Личный кабинет' if not self.kwargs.get(self.id_kwarg) else self.object.get_full_name()
+        title = StringLoader.get_string('users.profile.title') if not self.kwargs.get(self.id_kwarg) else self.object.get_full_name()
         context['title'] = title
 
         return context
 
 
-class UserRegistrationView(TemplateView):
-    template_name = 'users/registration.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Регистрация'
-        return context
+# class UserRegistrationView(TemplateView):
+#     template_name = 'users/registration.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['title'] = 'Регистрация'
+#         return context
 
 
 @login_required
@@ -85,7 +85,7 @@ class GroupsListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context["title"] = "Список групп"
+        context["title"] = StringLoader.get_string('users.groups.title')
         return context
 
 
@@ -107,7 +107,7 @@ class GroupPageView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = f"Группа {self.object.number}"
+        context['title'] = StringLoader.get_string('users.group_page.title') + self.object.number
         context['students'] = User.objects.filter(group__number=self.object.number)
 
         return context
