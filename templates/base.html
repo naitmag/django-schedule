@@ -11,31 +11,33 @@
 <body>
 
 <!-- Выезжающее меню -->
-<div class="sidebar" id="sidebar">
-    <a href="{% url "main:index" %}">Главная</a>
-    {% if not user.is_authenticated %}
-    <a href="{% url "users:login" %}">Вход</a>
-    {% else %}
-    <a href="{% url "users:profile" %}">Личный кабинет</a>
-    {% endif %}
-    {% if user.is_authenticated %}
-    <a href="{% url "lessons:schedule"%}">Расписание</a>
-    {% endif %}
-    <a href="{% url "groups"%}">Группы</a>
-    <a href="teacher.html">Преподаватели</a>
-    {% if user.is_admin or user.is_staff %}
-    <a href="{% url "admin:index" %}">Админ-панель</a>
-    {% endif%}
-    {% if user.is_authenticated %}
-    <a href="{% url "users:logout" %}">Выход</a>
-    {% endif %}
-</div>
+<nav class="sidebar" id="sidebar">
+    <ul>
+        <li><a href="{% url "main:index" %}">Главная</a></li>
+        {% if not user.is_authenticated %}
+        <li><a href="{% url "users:login" %}">Вход</a></li>
+        {% else %}
+        <li><a href="{% url "users:profile" %}">Личный кабинет</a></li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li><a href="{% url "lessons:schedule"%}">Расписание</a></li>
+        {% endif %}
+        <li><a href="{% url "groups"%}">Группы</a></li>
+        <li><a href="teacher.html">Преподаватели</a></li>
+        {% if user.is_admin or user.is_staff %}
+        <li><a href="{% url "admin:index" %}">Админ-панель</a></li>
+        {% endif%}
+        {% if user.is_authenticated %}
+        <li><a href="{% url "users:logout" %}">Выход</a></li>
+        {% endif %}
+    </ul>
+</nav>
 
 <!-- Верхняя панель с иконкой меню -->
-<div class="header">
+<header class="header">
     <span class="menu-icon" onclick="toggleMenu()">☰</span>
     {{ title }}
-</div>
+</header>
 
 {% block content %}{% endblock %}
 

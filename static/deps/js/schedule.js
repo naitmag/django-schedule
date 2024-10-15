@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let displayedWeek; // Переменная для хранения отображаемой недели
 
     // Функция для получения расписания и текущей недели
-    // Функция для получения расписания и текущей недели
 function fetchSchedule() {
     // Формируем базовый URL
     let url = '/schedule/get_schedule/';
@@ -69,7 +68,7 @@ function fetchSchedule() {
             dayCard.classList.add('schedule-card');
 
             // Заголовок с названием дня
-            const cardHeader = document.createElement('div');
+            const cardHeader = document.createElement('header');
             cardHeader.classList.add('card-header');
             switch (day.title) {
                 case 'Понедельник':

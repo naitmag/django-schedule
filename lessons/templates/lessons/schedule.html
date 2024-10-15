@@ -5,7 +5,7 @@
 
 
 <!-- Основной блок с карточками расписания -->
-<div class="schedule-control">
+<main class="schedule-control">
     {% if group and request.user.group.number != group %}
     <div id="group-notification" class="notification">
         <p class="alert"><h4>Вы просматриваете расписание другой группы!</h4></p>
@@ -35,10 +35,8 @@
         <button id="go-week" class="btn">Перейти</button>
     </div>
 
-</div>
+</main>
 
-
-<!-- Основной блок с карточками расписания -->
 <!-- Основной блок с карточками расписания -->
 <div class="schedule-container" id="schedule-container">
     <!-- Карточки расписания будут динамически добавлены здесь -->

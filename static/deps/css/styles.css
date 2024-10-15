@@ -47,6 +47,12 @@
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
         }
 
+        nav ul {
+            list-style: none;      /* Убираем маркировку у списка */
+            padding: 0;            /* Убираем отступы по умолчанию */
+            margin: 0;             /* Убираем внешние отступы */
+        }
+
         .sidebar a {
             padding: 15px 25px;
             text-decoration: none;
@@ -178,7 +184,6 @@
             width =100px;
             text-decoration: none;
         }
-
 
         /* Блок с ссылками */
         .link-block {
