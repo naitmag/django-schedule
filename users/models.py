@@ -28,6 +28,8 @@ class User(AbstractUser):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
+    def get_group_number(self):
+        return self.group.number
     def __str__(self):
         return f"[{self.pk}] {self.username}"
 

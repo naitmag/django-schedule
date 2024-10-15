@@ -245,6 +245,9 @@ class Lesson(models.Model):
     def get_day_name(self):
         return self.DAYS[self.day][1]
 
+
+    def get_group_number(self):
+        return self.group.number
     def get_lesson_type(self):
         lessons_order = ['л.', 'пр.', 'лаб.', 'сем.', 'кардио', 'силовой', '-']
         return self.LESSON_TYPES[lessons_order.index(self.lesson_type)][1]
