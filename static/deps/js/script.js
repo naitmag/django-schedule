@@ -6,7 +6,6 @@ function toggleMenu() {
         const sidebar = document.getElementById('sidebar');
         const isOpen = sidebar.style.left === '0px';
         sidebar.style.left = isOpen ? '-250px' : '0px'; // Скрываем/показываем меню
-        document.body.style.marginLeft = isOpen ? '0' : '250px'; // Сдвигаем контент
     }
 
 let currentWeek = 1
