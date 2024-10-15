@@ -42,10 +42,9 @@
 
 ### Требования
 
-- Python 3.x
-- Django 4.x
+- Python 3.12
+- Django 5.1.1
 - PostgreSQL
-- Docker и Docker Compose
 - Redis
 
 ### Шаги по установке
