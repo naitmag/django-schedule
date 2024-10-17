@@ -14,6 +14,8 @@ class Group(models.Model):
         verbose_name = 'Группа'
         verbose_name_plural = 'Группы'
 
+    def get_name(self):
+        return f"{self.number} {self.specialization}"
     def __str__(self):
         return f"[{self.pk}] {self.number} {self.specialization}"
 

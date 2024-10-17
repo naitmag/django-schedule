@@ -23,6 +23,7 @@ from users.views import GroupsListView, GroupPageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('dashboard/', include('dashboard.urls', namespace='dashboard')),
     path('', include('main.urls', namespace='main')),
     path('user/', include('users.urls', namespace='user')),
     path('schedule/', include('lessons.urls', namespace='lessons')),

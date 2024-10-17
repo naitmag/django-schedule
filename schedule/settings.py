@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'main',
     'users',
     'lessons',
+    'dashboard'
 ]
 
 MIDDLEWARE = [
