@@ -116,12 +116,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     lessonName.textContent = lesson.title;
                     lessonDiv.appendChild(lessonName);
 
-                    if (lesson.subgroup) {
-                        const subgroupInfo = document.createElement('div');
-                        subgroupInfo.classList.add('subgroup-info');
-                        subgroupInfo.textContent = lesson.subgroup;
-                        lessonDiv.appendChild(subgroupInfo);
-                    }
+
+                    const subgroupInfo = document.createElement('div');
+                    subgroupInfo.classList.add('subgroup-info');
+                    subgroupInfo.textContent = lesson.subgroup;
+                    lessonDiv.appendChild(subgroupInfo);
+
 
                     const lessonExtra = document.createElement('div');
                     lessonExtra.classList.add('lesson-extra');
