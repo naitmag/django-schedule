@@ -1,481 +1,544 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: margin-left 0.3s;
+}
 
-         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            transition: margin-left 0.3s;
-        }
-
-        body.profile {
-            transition: none; /* Исключение для body с классом profile */
-        }
-
-
-        /* Стили для верхнего блока */
-        .header {
-            background-color: #2c2c2c;
-            height: 60px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            padding-left: 20px;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            z-index: 1000;
-        }
-
-        /* Выезжающее меню */
-        .sidebar {
-            height: 100%;
-            width: 250px;
-            position: fixed;
-            top: 0;
-            left: -250px;
-            background-color: #343a40;
-            color: white;
-            transition: left 0.3s;
-            padding-top: 60px;
-            z-index: 900;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
-        }
+body.profile {
+    transition: none;
+    /* Исключение для body с классом profile */
+}
 
 
-        nav ul {
-            list-style: none;      /* Убираем маркировку у списка */
-            padding: 0;            /* Убираем отступы по умолчанию */
-            margin: 0;             /* Убираем внешние отступы */
-        }
+/* Стили для верхнего блока */
+.header {
+    background-color: #2c2c2c;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
 
-        .sidebar a {
-            padding: 15px 25px;
-            text-decoration: none;
-            font-size: 18px;
-            color: white;
-            display: block;
-            transition: background 0.3s, color 0.3s;
-            border-radius: 5px;
-            margin: 5px;
-        }
-
-        .sidebar a:hover {
-            background: #457b9d;
-            color: #f4f4f9;
-        }
-
-        /* Иконка меню */
-        .menu-icon {
-            font-size: 30px;
-            margin-right: 20px;
-            cursor: pointer;
-        }
-
-        /* Контейнер для основного контента */
-        .main-content {
-            padding: 80px 20px;
-            text-align: center;
-            flex: 1;
-        }
-        .main-content-profile {
-            padding: 80px 20px; /* Отступ сверху для заголовка */
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .main-content-login {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 20px;
-        }
-        /* Заголовок главной страницы */
-        .main-title {
-            font-size: 36px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        /* Описание на главной странице */
-        .main-description {
-            font-size: 18px;
-            margin-bottom: 40px;
-            color: #666;
-        }
-
-        .lesson-card {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
-            padding: 20px;
-            width: 80%;
-            text-align: left;
-        }
-        .lesson-title {
-            white-space: nowrap;
-            font-size: 28px;
-            margin-bottom: 15px;
-            color: #333;
-            padding-bottom: 12px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            color: white;
-        }
-
-        /* Линия разделения */
-        hr {
-            margin: 20px 0;
-            border: 1px solid #ccc;
-        }
-
-        .suggestion-title {
-            font-size: 24px;
-            margin: 20px 0;
-            color: #333;
-        }
-
-        .suggestion-item {
-            text-decoration: none;
-            margin: 10px 0;
-            background-color: #e9ecef;
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: background 0.3s;
-        }
-        .suggestion-item:hover {
-            background-color: #d4edda;
-        }
-
-        .suggestion-item a {
-            text-decoration: none;
-        }
-
-        .main-button {
-            background-color: #90be6d;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 18px;
-            transition: background 0.3s;
-            width =100px;
-            text-decoration: none;
-        }
-
-        /* Блок с ссылками */
-        .link-block {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 40px 0;
-            gap: 20px;
-        }
-
-        .link-card {
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-            width: 250px;
-            transition: transform 0.3s;
-            text-align: center;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column; /* Устанавливаем вертикальную ориентацию */
-            justify-content: space-between; /* Разделяем содержимое карточки */
-            height: 150px; /* Задайте фиксированную высоту карточки, если нужно */
-        }
-
-        .link-card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Заголовок карточки */
-        .link-card h2 {
-            font-size: 20px;
-            margin: 10px 0;
-            color: #333;
-        }
-
-        /* Описание карточки */
-        .link-card p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        /* Стили для ссылок в карточках */
-        .link-card p.action {
-            font-size: 18px;
-            text-decoration: none;
-            color: #333;
-            transition: color 0.3s;
-            margin-top: auto; /* Отодвигает текст вниз в карточке */
-        }
-
-        .link-card p.action:hover {
-            color: #1d3557;
-        }
-
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-            background-color: #ffffff;
-            border-radius: 20px; /* Круглые углы */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px; /* Увеличен внутренний отступ */
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-container h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .input-group label {
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
-
-        .input-group input {
-            width: 91%;
-            padding: 15px;
-            border: 2px solid #ccc;
-            border-radius: 10px; /* Круглые углы для инпутов */
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .input-group input:focus {
-            border-color: #90be6d;
-            box-shadow: 0 0 5px rgba(144, 190, 109, 0.5);
-            outline: none;
-        }
-
-        .login-button {
-            width: 100%;
-            background-color: #90be6d;
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 10px; /* Круглые углы для кнопки */
-            cursor: pointer;
-            font-size: 18px;
-            transition: background 0.3s, transform 0.2s;
-            font-weight: bold;
-        }
-
-        .login-button:hover {
-            background-color: #1d3557;
-            transform: translateY(-2px);
-        }
-
-        .signup-prompt {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #555;
-        }
-
-        .signup-link {
-            color: #90be6d;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* Стиль для профиля */
-        .profile-container {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 800px; /* Ширина контейнера профиля */
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Стиль для блока с информацией о пользователе */
-        .user-info {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        /* Стиль для фотографии профиля */
-        .profile-pic {
-            width: 160px;
-            height: 160px;
-            border-radius: 10px;
-            margin-right: 40px;
-            background-color: #ddd; /* Цвет фона для пустого места */
-        }
-
-        /* Стиль для текстовой информации */
-        .user-details {
-            flex: 1;
-        }
-
-         .status-container {
-            display: inline-block; /* Позволяет элементу быть блочным с отступами */
-            padding: 2px 6px; /* Внутренние отступы для минималистичного вида */
-            border-radius: 12px; /* Скругление углов */
-            margin-left: 10px; /* Отступ слева */
-            font-size: 14px; /* Размер шрифта */
-            font-weight: bold; /* Жирный шрифт */
-        }
-
-        .status {
-            color: #457b9d; /* Цвет текста статуса */
-            margin: 0; /* Убираем отступы */
-        }
-
-        .on-lesson {
-            background-color: #e6ffed; /* Лёгкий зеленый фон при наличии занятия */
-            color: #28a745; /* Цвет текста при наличии занятия */
-        }
-
-        .status:not(.on-lesson) {
-            background-color: #f8d7da; /* Светло-красный фон, если занятий нет */
-            color: #dc3545; /* Цвет текста, если занятий нет */
-        }
-        color: #28a745; /* Цвет текста при наличии занятия */
-        }
-
-        .lesson-card {
-            background-color: #f8f9fa; /* Цвет фона карточки */
-            border: 1px solid #ced4da; /* Цвет границы */
-            border-radius: 10px; /* Скругление углов */
-            padding: 15px; /* Внутренний отступ */
-            margin: 20px 0; /* Отступ сверху и снизу */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для эффекта */
-        }
+/* Выезжающее меню */
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    background-color: #343a40;
+    color: white;
+    transition: left 0.3s;
+    padding-top: 60px;
+    z-index: 900;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+}
 
 
-        /* Контейнер для карточек дисциплин */
-        .subject-cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
-        }
+nav ul {
+    list-style: none;
+    /* Убираем маркировку у списка */
+    padding: 0;
+    /* Убираем отступы по умолчанию */
+    margin: 0;
+    /* Убираем внешние отступы */
+}
 
-        /* Стили для ссылок-карточек */
-        .subject-card {
-            background-color: #f0f0f5;
-            border-radius: 10px;
-            padding: 20px;
-            width: 250px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-            text-decoration: none; /* Убираем подчеркивание */
-            color: inherit; /* Сохраняем цвет текста */
-            display: block;
-            cursor: pointer; /* Изменяем курсор при наведении */
-        }
+.sidebar a {
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: background 0.3s, color 0.3s;
+    border-radius: 5px;
+    margin: 5px;
+}
 
-        /* Заголовок дисциплины */
-        .subject-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
+.sidebar a:hover {
+    background: #457b9d;
+    color: #f4f4f9;
+}
 
-        /* Эффект при наведении */
-        .subject-card:hover {
-            transform: translateY(-5px);
-            background-color: #a8d0e6; /* Меняем цвет фона при наведении */
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }
+/* Иконка меню */
+.menu-icon {
+    font-size: 30px;
+    margin-right: 20px;
+    cursor: pointer;
+}
 
-        /* Добавляем плавную анимацию при наведении */
-        .subject-card:active {
-            transform: scale(0.98); /* Легкое сжатие при клике */
-            background-color: #d0ffd0; /* Немного более светлый фон при клике */
-        }
+/* Контейнер для основного контента */
+.main-content {
+    padding: 80px 20px;
+    text-align: center;
+    flex: 1;
+}
+
+.main-content-profile {
+    padding: 80px 20px;
+    /* Отступ сверху для заголовка */
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.main-content-login {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+}
+
+/* Заголовок главной страницы */
+.main-title {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Описание на главной странице */
+.main-description {
+    font-size: 18px;
+    margin-bottom: 40px;
+    color: #666;
+}
+
+.lesson-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    width: 80%;
+    text-align: left;
+}
+
+.lesson-title {
+    white-space: nowrap;
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #333;
+    padding-bottom: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    color: white;
+}
+
+/* Линия разделения */
+hr {
+    margin: 20px 0;
+    border: 1px solid #ccc;
+}
+
+.suggestion-title {
+    font-size: 24px;
+    margin: 20px 0;
+    color: #333;
+}
+
+.suggestion-item {
+    text-decoration: none;
+    margin: 10px 0;
+    background-color: #e9ecef;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s;
+}
+
+.suggestion-item:hover {
+    background-color: #d4edda;
+}
+
+.suggestion-item a {
+    text-decoration: none;
+}
+
+.main-button {
+    background-color: #90be6d;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s;
+    width: 100px;
+    text-decoration: none;
+}
+
+/* Блок с ссылками */
+.link-block {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 40px 0;
+    gap: 20px;
+}
+
+.link-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    transition: transform 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    /* Устанавливаем вертикальную ориентацию */
+    justify-content: space-between;
+    /* Разделяем содержимое карточки */
+    height: 150px;
+    /* Задайте фиксированную высоту карточки, если нужно */
+}
+
+.link-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Заголовок карточки */
+.link-card h2 {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #333;
+}
+
+/* Описание карточки */
+.link-card p {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Стили для ссылок в карточках */
+.link-card p.action {
+    font-size: 18px;
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+    margin-top: auto;
+    /* Отодвигает текст вниз в карточке */
+}
+
+.link-card p.action:hover {
+    color: #1d3557;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    /* Круглые углы */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    /* Увеличен внутренний отступ */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-container h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.input-group input {
+    width: 91%;
+    padding: 15px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    /* Круглые углы для инпутов */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #90be6d;
+    box-shadow: 0 0 5px rgba(144, 190, 109, 0.5);
+    outline: none;
+}
+
+.login-button {
+    width: 100%;
+    background-color: #90be6d;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    /* Круглые углы для кнопки */
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s, transform 0.2s;
+    font-weight: bold;
+}
+
+.login-button:hover {
+    background-color: #1d3557;
+    transform: translateY(-2px);
+}
+
+.signup-prompt {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.signup-link {
+    color: #90be6d;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Стиль для профиля */
+.profile-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 800px;
+    /* Ширина контейнера профиля */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Стиль для блока с информацией о пользователе */
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Стиль для фотографии профиля */
+.profile-pic {
+    width: 160px;
+    height: 160px;
+    border-radius: 10px;
+    margin-right: 40px;
+    background-color: #ddd;
+    /* Цвет фона для пустого места */
+}
+
+/* Стиль для текстовой информации */
+.user-details {
+    flex: 1;
+}
+
+.status-container {
+    display: inline-block;
+    /* Позволяет элементу быть блочным с отступами */
+    padding: 2px 6px;
+    /* Внутренние отступы для минималистичного вида */
+    border-radius: 12px;
+    /* Скругление углов */
+    margin-left: 10px;
+    /* Отступ слева */
+    font-size: 14px;
+    /* Размер шрифта */
+    font-weight: bold;
+    /* Жирный шрифт */
+}
+
+.status {
+    color: #457b9d;
+    /* Цвет текста статуса */
+    margin: 0;
+    /* Убираем отступы */
+}
+
+.on-lesson {
+    background-color: #e6ffed;
+    /* Лёгкий зеленый фон при наличии занятия */
+    color: #28a745;
+    /* Цвет текста при наличии занятия */
+}
+
+.status:not(.on-lesson) {
+    background-color: #f8d7da;
+    /* Светло-красный фон, если занятий нет */
+    color: #dc3545;
+    /* Цвет текста, если занятий нет */
+}
+
+/* color: #28a745;
+ Цвет текста при наличии занятия 
+} */
+
+.lesson-card {
+    background-color: #f8f9fa;
+    /* Цвет фона карточки */
+    border: 1px solid #ced4da;
+    /* Цвет границы */
+    border-radius: 10px;
+    /* Скругление углов */
+    padding: 15px;
+    /* Внутренний отступ */
+    margin: 20px 0;
+    /* Отступ сверху и снизу */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Тень для эффекта */
+}
 
 
-        .group-number {
-            background-color: #90be6d;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            display: inline-block;
-            font-size: 16px;
-            margin-top: 5px;
-        }
-        .position-title {
-            background-color: #457b9d;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            display: inline-block;
-            font-size: 16px;
-            margin-top: 5px;
-        }
-        /* Остальные данные профиля */
-        .profile-data {
-            margin-top: 20px;
-            font-size: 16px;
-            color: #333;
-        }
+/* Контейнер для карточек дисциплин */
+.subject-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Стили для ссылок-карточек */
+.subject-card {
+    background-color: #f0f0f5;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    /* Убираем подчеркивание */
+    color: inherit;
+    /* Сохраняем цвет текста */
+    display: block;
+    cursor: pointer;
+    /* Изменяем курсор при наведении */
+}
+
+/* Заголовок дисциплины */
+.subject-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Эффект при наведении */
+.subject-card:hover {
+    transform: translateY(-5px);
+    background-color: #a8d0e6;
+    /* Меняем цвет фона при наведении */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Добавляем плавную анимацию при наведении */
+.subject-card:active {
+    transform: scale(0.98);
+    /* Легкое сжатие при клике */
+    background-color: #d0ffd0;
+    /* Немного более светлый фон при клике */
+}
+
+
+.group-number {
+    background-color: #90be6d;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.position-title {
+    background-color: #457b9d;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+/* Остальные данные профиля */
+.profile-data {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+}
 
 .social-links {
-    display: flex; /* Используем флекс-контейнер */
-    justify-content: center; /* Центрируем содержимое по горизонтали */
-    margin-top: 10px; /* Отступ сверху, если необходимо */
+    display: flex;
+    /* Используем флекс-контейнер */
+    justify-content: center;
+    /* Центрируем содержимое по горизонтали */
+    margin-top: 10px;
+    /* Отступ сверху, если необходимо */
 }
 
 .social-button {
-    background-color: #90be6d; /* Цвет кнопок */
-    color: white; /* Цвет текста для кнопок */
-    padding: 10px 15px; /* Внутренние отступы для кнопок */
-    border-radius: 5px; /* Скругление углов */
-    display: inline-block; /* Позволяет кнопкам занимать только необходимое пространство */
-    font-size: 16px; /* Размер текста */
-    margin: 0 5px; /* Горизонтальные отступы между кнопками */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Плавные переходы */
-    cursor: pointer; /* Указатель курсора при наведении */
+    background-color: #90be6d;
+    /* Цвет кнопок */
+    color: white;
+    /* Цвет текста для кнопок */
+    padding: 10px 15px;
+    /* Внутренние отступы для кнопок */
+    border-radius: 5px;
+    /* Скругление углов */
+    display: inline-block;
+    /* Позволяет кнопкам занимать только необходимое пространство */
+    font-size: 16px;
+    /* Размер текста */
+    margin: 0 5px;
+    /* Горизонтальные отступы между кнопками */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Плавные переходы */
+    cursor: pointer;
+    /* Указатель курсора при наведении */
 }
 
 .social-button a {
-    text-decoration: none; /* Убираем подчеркивание */
-    color: inherit; /* Наследуем цвет текста от кнопки */
+    text-decoration: none;
+    /* Убираем подчеркивание */
+    color: inherit;
+    /* Наследуем цвет текста от кнопки */
 }
 
 .social-button:hover {
-    background-color: #457b9d; /* Цвет фона при наведении */
-    transform: scale(1.05); /* Увеличение кнопки при наведении */
+    background-color: #457b9d;
+    /* Цвет фона при наведении */
+    transform: scale(1.05);
+    /* Увеличение кнопки при наведении */
 }
 
 
@@ -485,49 +548,78 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f9f9f9; /* Цвет фона блока */
-    padding: 20px; /* Внутренний отступ */
-    border-radius: 10px; /* Скругление углов */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень блока */
-    margin-bottom: 20px; /* Отступ снизу для отделения от других блоков */
-    margin-top: 45px; /* Отступ снизу для отделения от других блоков */
+    background-color: #f9f9f9;
+    /* Цвет фона блока */
+    padding: 20px;
+    /* Внутренний отступ */
+    border-radius: 10px;
+    /* Скругление углов */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* Тень блока */
+    margin-bottom: 20px;
+    /* Отступ снизу для отделения от других блоков */
+    margin-top: 45px;
+    /* Отступ снизу для отделения от других блоков */
 }
 
 .notification {
-    background-color: #e0e0e0; /* Цвет фона для уведомления */
-    padding: 10px; /* Внутренний отступ для уведомления */
-    margin-bottom: 10px; /* Отступ снизу уведомления */
-    border-radius: 5px; /* Скругление углов уведомления */
-    width: 100%; /* Ширина уведомления */
-    position: relative; /* Для позиционирования при необходимости */
-    text-align: center; /* Центрирование текста */
+    background-color: #e0e0e0;
+    /* Цвет фона для уведомления */
+    padding: 10px;
+    /* Внутренний отступ для уведомления */
+    margin-bottom: 10px;
+    /* Отступ снизу уведомления */
+    border-radius: 5px;
+    /* Скругление углов уведомления */
+    width: 100%;
+    /* Ширина уведомления */
+    position: relative;
+    /* Для позиционирования при необходимости */
+    text-align: center;
+    /* Центрирование текста */
 }
 
-.group-info, .week-info {
-    margin: 10px 0; /* Отступ сверху и снизу для информации о группе и неделе */
-    font-size: 18px; /* Размер шрифта */
-    color: #333; /* Цвет текста */
+.group-info,
+.week-info {
+    margin: 10px 0;
+    /* Отступ сверху и снизу для информации о группе и неделе */
+    font-size: 18px;
+    /* Размер шрифта */
+    color: #333;
+    /* Цвет текста */
 }
 
 .week-controls {
-    display: flex; /* Выравнивание кнопок в одну строку */
-    align-items: center; /* Центрирование кнопок по вертикали */
-    justify-content: center; /* Центрирование кнопок по горизонтали */
+    display: flex;
+    /* Выравнивание кнопок в одну строку */
+    align-items: center;
+    /* Центрирование кнопок по вертикали */
+    justify-content: center;
+    /* Центрирование кнопок по горизонтали */
 }
 
 .btn {
-    background-color: #90be6d; /* Цвет фона кнопки */
-    color: white; /* Цвет текста кнопки */
-    border: none; /* Убираем рамку */
-    padding: 10px 15px; /* Внутренние отступы кнопки */
-    margin: 5px; /* Отступы между кнопками */
-    border-radius: 5px; /* Скругление углов кнопки */
-    cursor: pointer; /* Указатель курсора на кнопках */
-    transition: background-color 0.3s; /* Плавный переход цвета при наведении */
+    background-color: #90be6d;
+    /* Цвет фона кнопки */
+    color: white;
+    /* Цвет текста кнопки */
+    border: none;
+    /* Убираем рамку */
+    padding: 10px 15px;
+    /* Внутренние отступы кнопки */
+    margin: 5px;
+    /* Отступы между кнопками */
+    border-radius: 5px;
+    /* Скругление углов кнопки */
+    cursor: pointer;
+    /* Указатель курсора на кнопках */
+    transition: background-color 0.3s;
+    /* Плавный переход цвета при наведении */
 }
 
 .btn-action {
-    background-color: #45484c ; /* Основной цвет кнопки */
+    background-color: #45484c;
+    /* Основной цвет кнопки */
     color: white;
     border: none;
     padding: 10px 15px;
@@ -539,257 +631,320 @@
 
 /* Стиль при наведении для активной кнопки */
 .btn-action:hover {
-    background-color: #5c676e; /* Темнее при наведении */
+    background-color: #5c676e;
+    /* Темнее при наведении */
 }
 
 /* Стиль неактивной кнопки */
 .btn-action.disabled {
-    background-color: #d3d3d3; /* Серый цвет для неактивной кнопки */
-    cursor: not-allowed; /* Изменяем курсор */
+    background-color: #d3d3d3;
+    /* Серый цвет для неактивной кнопки */
+    cursor: not-allowed;
+    /* Изменяем курсор */
 }
 
 .btn:hover {
-    background-color: #78a659;` /* Цвет кнопки при наведении */
+    background-color: #78a659;
+    /* Цвет кнопки при наведении */
 }
 
 .hidden {
-    display: none; /* Скрытие элемента */
+    display: none;
+    /* Скрытие элемента */
 }
 
 input[type="number"] {
-    width: 60px; /* Ширина поля ввода */
-    margin-left: 10px; /* Отступ слева для отделения от кнопки */
-    padding: 8px; /* Внутренний отступ для поля ввода */
-    border: 1px solid #ccc; /* Рамка вокруг поля ввода */
-    border-radius: 5px; /* Скругление углов поля ввода */
-    font-size: 16px; /* Размер шрифта в поле ввода */
+    width: 60px;
+    /* Ширина поля ввода */
+    margin-left: 10px;
+    /* Отступ слева для отделения от кнопки */
+    padding: 8px;
+    /* Внутренний отступ для поля ввода */
+    border: 1px solid #ccc;
+    /* Рамка вокруг поля ввода */
+    border-radius: 5px;
+    /* Скругление углов поля ввода */
+    font-size: 16px;
+    /* Размер шрифта в поле ввода */
 }
 
 
+/* Карточки расписания */
+.schedule-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 0 20px 20px 20px;
+    /* Убрали верхний отступ, чтобы он не накладывался на селектор */
+}
 
-        .schedule-card {
-    overflow: hidden;
+.schedule-card {
+    flex: 1 1 calc(33.333% - 20px);
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    /* height: 300px; */
+    /* Увеличена высота карточек */
+    padding: 0;
+    position: relative;
+    transition: box-shadow 0.3s, transform 0.3s;
     min-height: 260px;
 }
 
+.schedule-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Увеличение тени при наведении */
+    transform: translateY(-5px);
+    /* Подъем карточки при наведении */
+}
 
-        /* Карточки расписания */
-        .schedule-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin: 0 20px 20px 20px; /* Убрали верхний отступ, чтобы он не накладывался на селектор */
-        }
+/* Заголовки карточек */
+.card-header {
+    border-radius: 12px 12px 0 0;
+    padding: 15px;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+}
 
-        .schedule-card {
-            flex: 1 1 calc(33.333% - 20px);
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            height: 300px; /* Увеличена высота карточек */
-            padding: 0;
-            position: relative;
-            overflow: hidden;
-            transition: box-shadow 0.3s, transform 0.3s; /* Плавный переход для тени и трансформации */
-            min-height: 260px;
-        }
+.monday {
+    background-color: #8cbfba;
+}
 
-        .schedule-card:hover {
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Увеличение тени при наведении */
-            transform: translateY(-5px); /* Подъем карточки при наведении */
-        }
+.tuesday {
+    background-color: #8aacc8;
+}
 
-        /* Заголовки карточек */
-        .card-header {
-            border-radius: 12px 12px 0 0;
-            padding: 15px;
-            color: white;
-            font-size: 18px;
-            text-align: center;
-        }
+.wednesday {
+    background-color: #d4c56e;
+}
 
-        .monday { background-color: #8cbfba      ; }
-        .tuesday { background-color: #8aacc8      ; }
-        .wednesday { background-color: #d4c56e       ; }
-        .thursday { background-color: #d89e9f    ; }
-        .friday { background-color: #c2a49c     ; }
-        .saturday { background-color: #a49bd8   ; }
+.thursday {
+    background-color: #d89e9f;
+}
 
-        /* Тело карточки */
-        .card-body {
-            padding: 15px;
-            font-size: 16px;
-            color: #333;
-            flex-grow: 1;
-        }
+.friday {
+    background-color: #c2a49c;
+}
 
-        .card-body.empty {
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: 100%;
-        }
-        .lesson {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-            align-items: center; /* Выравнивание по центру */
-        }
+.saturday {
+    background-color: #a49bd8;
+}
 
-        .lesson:last-child {
-            border-bottom: none;
-        }
+/* Тело карточки */
+.card-body {
+    padding: 15px;
+    font-size: 16px;
+    color: #333;
+    flex-grow: 1;
+}
 
-        .subgroup-info,
-.teacher-info {
-    font-size: 12px;
-    color: #495057;
-    margin: 5px;
+.card-body.empty {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+}
+
+.lesson {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+    position: relative;
+}
+
+.lesson-extra-trigger {
+    background: #45484c;
+    color: #fff;
+    display: inline-block;
+    /* border: 1px solid; */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 1.3;
+    font-style: normal;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.lesson-extra-tooltip {
+    display: none;
+    position: absolute;
+    bottom: 15px;
+    right: 25px;
+    background: #f4f4f9;
+    z-index: 20;
+    width: 300px;
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d3d3d3;
+}
+
+.lesson-extra:hover .lesson-extra-tooltip {
+    display: block;
+}
+
+.lesson-extra:hover .lesson-extra-trigger {
+    background-color: #5c676e;
 }
 
 .subgroup-info {
-white-space: nowrap;
+    /* text-wrap: nowrap; */
+    font-size: 12px;
+    color: #495057;
+    width: 20%;
 }
 
-        /* Подвал карточки */
-        .card-footer {
-            background-color: #f1f1f1;
-            border-radius: 0 0 12px 12px;
-            padding: 10px;
-            font-size: 14px;
-            color: #6c757d;
-            text-align: center;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
+/* Подвал карточки */
+.card-footer {
+    background-color: #f1f1f1;
+    border-radius: 0 0 12px 12px;
+    padding: 10px;
+    font-size: 14px;
+    color: #6c757d;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
 
-        /* Время занятия */
-        .lesson-time {
-            text-wrap: nowrap;
-            font-weight: bold;
-            margin-right: 5px; /* Отступ между временем и типом занятия */
-            text-align: right; /* Выравнивание по правому краю */
-            width: 100px; /* Фиксированная ширина для времени */
-        }
+/* Время занятия */
+.lesson-time {
+    font-weight: bold;
+    width: 25%;
 
-        /* Тип занятия */
-        .lesson-type {
-            font-style: italic;
-            font-weight: normal;
-            margin: 0 10px; /* Отступ между типом и названием занятия */
-            text-align: center; /* Центрирование типа занятия */
-            width: 40px; /* Фиксированная ширина для типа занятия */
-            color: #6c757d; /* Цвет для типов занятий */
-        }
+}
 
-        .lesson-name {
-            flex-grow: 1;
-            text-decoration: none;
-            color: #6c757d; /* Серый цвет для названий занятий */
-            transition: color 0.3s;
-            font-weight: bold; /* Жирный шрифт для названий занятий */
-            text-align: left; /* Выравнивание по левому краю */
-        }
+.lesson-type {
+    font-weight: normal;
+    text-align: center;
+    width: 10%;
+    color: #6c757d;
 
-        .lesson-name:hover {
-            color: #457b9d; /* Цвет при наведении */
-        }
+}
 
-        .no-lesson-title {
-            font-size: 18px;
-            color: #6c757d;
-            margin: 8;
-        }
-        .no-lesson-description {
-            font-size: 14;
-            color: #999;
-        }
+.lesson-name {
+    text-decoration: none;
+    color: #6c757d;
+    transition: color 0.3s;
+    font-weight: bold;
+    width: 40%;
+    font-size: 14px;
+    padding: 0 10px;
+}
 
-        .teacher-link {
-            color: #457b9d; /* Цвет текста в ссылке, подходящий под основной стиль */
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
+.lesson-name:hover {
+    color: #457b9d;
+    /* Цвет при наведении */
+}
 
-        .teacher-link:hover {
-            color: #a8d0e6; /* Цвет при наведении — можно выбрать из предложенных ранее цветов */
-            text-decoration: underline; /* Добавляет подчеркивание при наведении */
-        }
+.no-lesson-title {
+    font-size: 18px;
+    color: #6c757d;
+    margin: 8;
+}
+
+.no-lesson-description {
+    font-size: 14;
+    color: #999;
+}
+
+.teacher-link {
+    color: #457b9d;
+    /* Цвет текста в ссылке, подходящий под основной стиль */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.teacher-link:hover {
+    color: #a8d0e6;
+    /* Цвет при наведении — можно выбрать из предложенных ранее цветов */
+    text-decoration: underline;
+    /* Добавляет подчеркивание при наведении */
+}
 
 /* Контейнер для карточек групп */
 .profile-group-cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
 }
 
 /* Стили для карточек групп */
 .profile-group-card {
-  background-color: #ffffff;
-  border-radius: 10px;
-  padding: 20px;
-  width: 300px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Распределяет пространство между элементами */
-  transition: transform 0.3s, box-shadow 0.3s;
-  text-align: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Распределяет пространство между элементами */
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
 }
 
 /* Эффект при наведении на карточку */
 .profile-group-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Заголовок группы */
 .group-title {
-  font-size: 24px;
-  margin-bottom: 10px;
-  color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
 }
 
 /* Краткая информация о группе */
 .group-info {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 15px;
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
 }
 
 /* Кнопка для просмотра расписания */
 .schedule-button {
     text-decoration: none;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  margin-top: auto; /* Отодвигает кнопку к низу карточки */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: auto;
+    /* Отодвигает кнопку к низу карточки */
 }
 
 .card-content {
-  text-decoration: none; /* Убирает подчеркивание ссылки */
-  color: inherit; /* Устанавливает цвет текста на цвет родителя */
-  flex-grow: 1; /* Заставляет контент занимать всё доступное пространство */
+    text-decoration: none;
+    /* Убирает подчеркивание ссылки */
+    color: inherit;
+    /* Устанавливает цвет текста на цвет родителя */
+    flex-grow: 1;
+    /* Заставляет контент занимать всё доступное пространство */
 }
 
 /* Основной блок с информацией о группе */
 .main-content-group {
-    padding: 100px 20px; /* Отступ сверху для заголовка */
+    padding: 100px 20px;
+    /* Отступ сверху для заголовка */
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -884,166 +1039,209 @@ white-space: nowrap;
 }
 
 .register-container {
-            width: 600px;
-            background-color: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            padding-left: 60px;
-            padding-right: 60px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+    width: 600px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    padding-left: 60px;
+    padding-right: 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
 
-        .register-container h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #333;
-            margin-left: 20px
-        }
+.register-container h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+    margin-left: 20px
+}
 
-        .input-group-register {
-            margin-bottom: 20px;
-            text-align: left;
-            width: 100%;
-            margin-left: 20px
-        }
+.input-group-register {
+    margin-bottom: 20px;
+    text-align: left;
+    width: 100%;
+    margin-left: 20px
+}
 
-        .input-group-register label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
+.input-group-register label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
 
-        .input-group-register input,
-        .input-group-register select {
-            width: calc(85% - 10px);
-            padding: 15px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
+.input-group-register input,
+.input-group-register select {
+    width: calc(85% - 10px);
+    padding: 15px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
 
-        .input-group-register input:focus,
-        .input-group-register select:focus {
-            border-color: #90be6d;
-            box-shadow: 0 0 5px rgba(144, 190, 109, 0.5);
-            outline: none;
-        }
+.input-group-register input:focus,
+.input-group-register select:focus {
+    border-color: #90be6d;
+    box-shadow: 0 0 5px rgba(144, 190, 109, 0.5);
+    outline: none;
+}
 
-        .input-pair {
-            display: flex;
-            justify-content: space-between;
-        }
+.input-pair {
+    display: flex;
+    justify-content: space-between;
+}
 
 
-        .register-button {
-            width: 100%;
-            background-color: #ccc;
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            cursor: not-allowed;
-            font-size: 18px;
-            transition: background 0.3s, transform 0.2s;
-            font-weight: bold;
-        }
+.register-button {
+    width: 100%;
+    background-color: #ccc;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: not-allowed;
+    font-size: 18px;
+    transition: background 0.3s, transform 0.2s;
+    font-weight: bold;
+}
 
-        .register-button.active {
-            background-color: #90be6d;
-            cursor: pointer;
-        }
+.register-button.active {
+    background-color: #90be6d;
+    cursor: pointer;
+}
 
-        .register-button.active:hover {
-            background-color: #1d3557;
-            transform: translateY(-2px);
-        }
+.register-button.active:hover {
+    background-color: #1d3557;
+    transform: translateY(-2px);
+}
 
-        .error-message {
-            color: grey;
-            font-size: 14px;
-            margin-top: 10px;
-        }
+.error-message {
+    color: grey;
+    font-size: 14px;
+    margin-top: 10px;
+}
 
-        .validation-message {
-            font-size: 14px;
-            color: grey;
-            margin-top: 10px;
-            display: none; /* Скрыто по умолчанию */
-        }
+.validation-message {
+    font-size: 14px;
+    color: grey;
+    margin-top: 10px;
+    display: none;
+    /* Скрыто по умолчанию */
+}
 
-/* Стили для мобильных устройств */
-@media (max-width: 768px) {
+
+@media (max-width: 1200px) {
+    .schedule-card {
+        flex: 1 1 calc(50% - 20px);
+    }
+}
+
+/* Mobile */
+@media (max-width: 1024px) {
+
     /* Основной контейнер расписания */
     .schedule-container {
         display: flex;
-        flex-direction: column; /* Размещаем карточки в столбик */
-        align-items: center; /* Центрируем карточки */
+        flex-direction: column;
+        /* Размещаем карточки в столбик */
+        align-items: center;
+        /* Центрируем карточки */
     }
 
     .schedule-card {
-        width: 100%; /* Ширина карточки 100% */
+        width: 100%;
+        min-height: 0
+        /* Ширина карточки 100% */
     }
 
     .lesson {
-     flex-direction: column
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
     }
 
-    .lesson-type {
-    font-size: 2vh;
+    .subgroup-info {
+        font-size: 12px;
+        color: #495057;
+        width: 20%;
     }
+
     .lesson-time {
-        font-size: 2.5vh;
+        margin-bottom: 5px;
         width: 100%;
+    }
+    
+    .lesson-type {
+        width: 100;
+    }
+
+    .lesson-extra-trigger {
+        display: none;
+    }
+
+    .lesson-extra-tooltip {
+        display: block;
+        position: static;
+        background: none;
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .teacher-info {
         text-align: center;
     }
-    .teacher-info {
-    text-align: center;
-    }
+
     .lesson-name {
-    text-align: center;
-    font-weight: normal;
-    font-size: 2vh;
+        font-weight: normal;
+        margin-bottom: 5px;
+        width: 100%;
     }
 
     /* Стиль для панели управления расписанием */
     .schedule-control {
         display: flex;
-        flex-direction: column; /* Размещаем элементы в столбик */
-        align-items: center; /* Центрируем элементы */
-        padding: 15px; /* Отступы для удобства */
-        margin-bottom: 20px; /* Отступ снизу */
+        flex-direction: column;
+        /* Размещаем элементы в столбик */
+        align-items: center;
+        /* Центрируем элементы */
+        padding: 15px;
+        /* Отступы для удобства */
+        margin-bottom: 20px;
+        /* Отступ снизу */
     }
 
     .week-controls {
         display: flex;
-        align-items: center; /* Центрируем кнопки */
-        margin-top: 10px; /* Отступ сверху */
+        align-items: center;
+        /* Центрируем кнопки */
+        margin-top: 10px;
+        /* Отступ сверху */
     }
 
     #week-input {
-        width: 40px; /* Поле ввода на всю ширину */
+        width: 40px;
+        /* Поле ввода на всю ширину */
     }
 
     .notification {
-        text-align: center; /* Центрируем текст уведомления */
-        margin-bottom: 10px; /* Отступ снизу */
+        text-align: center;
+        /* Центрируем текст уведомления */
+        margin-bottom: 10px;
+        /* Отступ снизу */
     }
 }
 
-
-
-        /* Футер */
-        .footer {
-            background-color: #2c2c2c;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            width: 100%;
-            box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
-            position: relative;
-            margin-top: auto;
-        }
+/* Футер */
+.footer {
+    background-color: #2c2c2c;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    width: 100%;
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-top: auto;
+}

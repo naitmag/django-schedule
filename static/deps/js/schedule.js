@@ -7,70 +7,55 @@ document.addEventListener('DOMContentLoaded', function () {
     const goToWeekBtn = document.getElementById('go-week');
     const weekInput = document.getElementById('week-input');
 
-    const queryString = window.location.search
+    const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
 
     const group = urlParams.get('group');
     const teacher = urlParams.get('teacher');
 
+    let currentWeek;
+    let displayedWeek;
 
-    let currentWeek; // Переменная для хранения текущей недели
-    let displayedWeek; // Переменная для хранения отображаемой недели
+    function fetchSchedule() {
+        let url = '/schedule/get_schedule/';
+        const params = [];
+        if (group) {
+            params.push(`group=${encodeURIComponent(group)}`);
+        }
+        if (teacher) {
+            params.push(`teacher=${encodeURIComponent(teacher)}`);
+        }
+        if (params.length > 0) {
+            url += '?' + params.join('&');
+        }
 
-    // Функция для получения расписания и текущей недели
-function fetchSchedule() {
-    // Формируем базовый URL
-    let url = '/schedule/get_schedule/';
-
-    // Проверяем параметры group и teacher, добавляем их в запрос, если они существуют
-    const params = [];
-    if (group) {
-        params.push(`group=${encodeURIComponent(group)}`);
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка сети при получении расписания');
+                }
+                return response.json();
+            })
+            .then(data => {
+                currentWeek = data.current_week;
+                currentWeekSpan.textContent = currentWeek;
+                renderSchedule(data.schedule);
+                displayedWeek = currentWeek;
+                updateCurrentWeekButton();
+            })
+            .catch(error => console.error('Ошибка при получении данных:', error));
     }
-    if (teacher) {
-        params.push(`teacher=${encodeURIComponent(teacher)}`);
-    }
 
-    // Добавляем параметры к URL, если они есть
-    if (params.length > 0) {
-        url += '?' + params.join('&');
-    }
-
-    // Выполняем запрос
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Сетевая ошибка при получении расписания');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Установка текущей недели
-            currentWeek = data.current_week;
-            currentWeekSpan.textContent = currentWeek;
-
-            // Отрисовка расписания
-            renderSchedule(data.schedule);
-            displayedWeek = currentWeek; // Устанавливаем отображаемую неделю
-            updateCurrentWeekButton(); // Обновляем кнопку текущей недели
-        })
-        .catch(error => console.error('Ошибка при получении данных:', error));
-}
-
-
-    // Функция для отрисовки расписания
     function renderSchedule(schedule) {
-        scheduleContainer.innerHTML = '';  // Очистка предыдущего расписания
+        scheduleContainer.innerHTML = '';
 
         schedule.forEach(day => {
-            // Создаем карточку для каждого дня
             const dayCard = document.createElement('div');
             dayCard.classList.add('schedule-card');
 
-            // Заголовок с названием дня
             const cardHeader = document.createElement('header');
             cardHeader.classList.add('card-header');
-            switch (day.title) {
+             switch (day.title) {
                 case 'Понедельник':
                     cardHeader.classList.add('monday');
                     break;
@@ -93,10 +78,10 @@ function fetchSchedule() {
                     cardHeader.classList.add('sunday');
                     break;
             }
-            cardHeader.textContent = `${day.title} (${day.date})`; // Присваиваем название дня и дату
+
+            cardHeader.textContent = `${day.title} (${day.date})`;
             dayCard.appendChild(cardHeader);
 
-            // Тело карточки с занятиями
             const cardBody = document.createElement('div');
             cardBody.classList.add('card-body');
 
@@ -131,71 +116,64 @@ function fetchSchedule() {
                     lessonName.textContent = lesson.title;
                     lessonDiv.appendChild(lessonName);
 
-                    // Добавление информации о подгруппе
-                    if (lesson.subgroup) {
-                        const subgroupInfo = document.createElement('div');
-                        subgroupInfo.classList.add('subgroup-info');
-                        subgroupInfo.textContent = `${lesson.subgroup}`;
-                        lessonDiv.appendChild(subgroupInfo);
-                    }
 
-                    // Добавление информации о преподавателе
+                    const subgroupInfo = document.createElement('div');
+                    subgroupInfo.classList.add('subgroup-info');
+                    subgroupInfo.textContent = lesson.subgroup;
+                    lessonDiv.appendChild(subgroupInfo);
+
+
+                    const lessonExtra = document.createElement('div');
+                    lessonExtra.classList.add('lesson-extra');
+                    const lessonExtraTrigger = document.createElement('i');
+                    lessonExtraTrigger.classList.add('lesson-extra-trigger');
+                    lessonExtraTrigger.textContent = 'i';
+                    lessonExtra.appendChild(lessonExtraTrigger);
+
+                    const lessonExtraTooltip = document.createElement('div');
+                    lessonExtraTooltip.classList.add('lesson-extra-tooltip');
+
                     const teacherInfo = document.createElement('div');
                     teacherInfo.classList.add('teacher-info');
-                    teacherInfo.textContent = `${lesson.teacher}`;
-                    lessonDiv.appendChild(teacherInfo);
+                    teacherInfo.textContent = lesson.teacher;
+                    lessonExtraTooltip.appendChild(teacherInfo);
+
+                    lessonExtra.appendChild(lessonExtraTooltip);
+                    lessonDiv.appendChild(lessonExtra);
 
                     cardBody.appendChild(lessonDiv);
                 });
             }
 
             dayCard.appendChild(cardBody);
-            // Добавляем карточку на страницу
             scheduleContainer.appendChild(dayCard);
         });
     }
 
-    // Функция для обновления расписания с выбранной неделей
-    // Функция для обновления расписания с выбранной неделей
-function updateSchedule(newWeek) {
-    if (newWeek < 1 || newWeek > 20) return; // Проверка на диапазон
+    function updateSchedule(newWeek) {
+        if (newWeek < 1 || newWeek > 20) return;
+        let url = `/schedule/get_schedule/?week=${newWeek}`;
+        const params = [];
+        if (group) params.push(`group=${encodeURIComponent(group)}`);
+        if (teacher) params.push(`teacher=${encodeURIComponent(teacher)}`);
+        if (params.length > 0) url += '&' + params.join('&');
 
-    // Формируем базовый URL
-    let url = `/schedule/get_schedule/?week=${newWeek}`;
-
-    // Проверяем параметры group и teacher, добавляем их в запрос, если они существуют
-    const params = [];
-    if (group) {
-        params.push(`group=${encodeURIComponent(group)}`);
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка сети при получении расписания');
+                }
+                return response.json();
+            })
+            .then(data => {
+                renderSchedule(data.schedule);
+                displayedWeek = newWeek;
+                currentWeekSpan.textContent = displayedWeek;
+                updateCurrentWeekButton();
+            })
+            .catch(error => console.error('Ошибка при получении данных:', error));
     }
-    if (teacher) {
-        params.push(`teacher=${encodeURIComponent(teacher)}`);
-    }
 
-    // Добавляем параметры к URL, если они есть
-    if (params.length > 0) {
-        url += '&' + params.join('&');
-    }
-
-    // Выполняем запрос
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Сетевая ошибка при получении расписания');
-            }
-            return response.json();
-        })
-        .then(data => {
-            renderSchedule(data.schedule);
-            displayedWeek = newWeek; // Обновляем отображаемую неделю
-            currentWeekSpan.textContent = displayedWeek; // Обновляем отображение текущей недели
-            updateCurrentWeekButton(); // Обновляем кнопку текущей недели
-        })
-        .catch(error => console.error('Ошибка при получении данных:', error));
-}
-
-
-    // Функция для обновления состояния кнопки текущей недели
     function updateCurrentWeekButton() {
         if (displayedWeek === currentWeek) {
             currentWeekBtn.classList.add('disabled');
@@ -204,15 +182,14 @@ function updateSchedule(newWeek) {
         }
     }
 
-    // Обработчики кнопок смены недели
     prevWeekBtn.addEventListener('click', () => {
-        updateSchedule((displayedWeek - 1 + 20) % 20 || 20); // Переход к предыдущей неделе
+        updateSchedule((displayedWeek - 1 + 20) % 20 || 20);
     });
     nextWeekBtn.addEventListener('click', () => {
-        updateSchedule((displayedWeek % 20) + 1); // Переход к следующей неделе
+        updateSchedule((displayedWeek % 20) + 1);
     });
     currentWeekBtn.addEventListener('click', () => {
-        updateSchedule(currentWeek);  // Возвращаемся на текущую неделю
+        updateSchedule(currentWeek);
     });
     goToWeekBtn.addEventListener('click', () => {
         const inputWeek = parseInt(weekInput.value);
@@ -221,6 +198,5 @@ function updateSchedule(newWeek) {
         }
     });
 
-    // Изначальная загрузка расписания
     fetchSchedule();
 });
