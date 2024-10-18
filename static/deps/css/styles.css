@@ -634,28 +634,59 @@ input[type="number"] {
             height: 100%;
         }
         .lesson {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-            align-items: center; /* Выравнивание по центру */
-        }
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+    position: relative;
+    }
 
-        .lesson:last-child {
-            border-bottom: none;
-        }
+    .lesson-extra-trigger {
+    background: #45484c;
+    color: #fff;
+    display: inline-block;
+    /* border: 1px solid; */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 1.3;
+    font-style: normal;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-        .subgroup-info,
-.teacher-info {
+.lesson-extra-tooltip {
+    display: none;
+    position: absolute;
+    bottom: 15px;
+    right: 25px;
+    background: #f4f4f9;
+    z-index: 20;
+    width: 300px;
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d3d3d3;
+    }
+.lesson-extra:hover .lesson-extra-tooltip {
+    display: block;
+}
+
+.lesson-extra:hover .lesson-extra-trigger{
+    background-color: #5c676e;
+}
+
+    .subgroup-info {
+    text-wrap: nowrap;
     font-size: 12px;
     color: #495057;
-    margin: 5px;
+    width: 20%;
 }
 
-.subgroup-info {
-white-space: nowrap;
-}
+
 
         /* Подвал карточки */
         .card-footer {
@@ -672,17 +703,15 @@ white-space: nowrap;
         }
 
         /* Время занятия */
-        .lesson-time {
-            text-wrap: nowrap;
-            font-weight: bold;
-            margin-right: 5px; /* Отступ между временем и типом занятия */
-            text-align: right; /* Выравнивание по правому краю */
-            width: 100px; /* Фиксированная ширина для времени */
-        }
+            .lesson-time {
+    text-wrap: nowrap;
+    font-weight: bold;
+    width: 20%;
+}
 
         /* Тип занятия */
         .lesson-type {
-            font-style: italic;
+            font-style: bold;
             font-weight: normal;
             margin: 0 10px; /* Отступ между типом и названием занятия */
             text-align: center; /* Центрирование типа занятия */
@@ -691,13 +720,14 @@ white-space: nowrap;
         }
 
         .lesson-name {
-            flex-grow: 1;
-            text-decoration: none;
-            color: #6c757d; /* Серый цвет для названий занятий */
-            transition: color 0.3s;
-            font-weight: bold; /* Жирный шрифт для названий занятий */
-            text-align: left; /* Выравнивание по левому краю */
-        }
+    text-decoration: none;
+    color: #6c757d;
+    transition: color 0.3s;
+    font-weight: bold;
+    width: 80%;
+    font-size: 14px;
+    padding: 0 10px;
+    }
 
         .lesson-name:hover {
             color: #457b9d; /* Цвет при наведении */
@@ -975,8 +1005,15 @@ white-space: nowrap;
             display: none; /* Скрыто по умолчанию */
         }
 
+
+.@media (max-width: 1200px) {
+.schedule-card {
+    flex: 1 1 calc(50% - 20px);
+}
+}
+
 /* Стили для мобильных устройств */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     /* Основной контейнер расписания */
     .schedule-container {
         display: flex;
@@ -989,24 +1026,39 @@ white-space: nowrap;
     }
 
     .lesson {
-     flex-direction: column
-    }
+        flex-direction: column;
+        text-align:center;
+         width:100%;
+        }
 
-    .lesson-type {
-    font-size: 2vh;
-    }
-    .lesson-time {
-        font-size: 2.5vh;
-        width: 100%;
-        text-align: center;
-    }
+    .subgroup-info {
+     width:100%;
+  }
+
+
+     .lesson-time {
+    margin-bottom: 5px;
+  }
+
+  .lesson-extra-trigger {
+    display: none;
+  }
+  .lesson-extra-tooltip {
+    display: block;
+    position: static;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
     .teacher-info {
     text-align: center;
     }
-    .lesson-name {
-    text-align: center;
-    font-weight: normal;
-    font-size: 2vh;
+   .lesson-name {
+        font-weight: normal;
+        margin-bottom: 5px;
+        width:100%;
     }
 
     /* Стиль для панели управления расписанием */
@@ -1033,8 +1085,6 @@ white-space: nowrap;
         margin-bottom: 10px; /* Отступ снизу */
     }
 }
-
-
 
         /* Футер */
         .footer {
