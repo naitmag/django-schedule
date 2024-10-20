@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Основной блок с содержимым -->
+<div class="main-content">
+    <h1 class="main-title">{{ result }}</h1>
+    <p class="main-description">{{ description }}</p>
+
+    <div class="main-content-login">
+
+        <div class="register-container">
+            <h1>Загрузка занятий</h1>
+            <form id="register-form" action="{% url "dashboard:upload_lessons"%}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input-group-register">
+                    <label for="file">Выберите .xlsx файл с занятиями</label>
+                    <input type="file" id="file" name="file" required>
+                </div>
+                <button type="submit" id="register-button" class="register-button active">Загрузить</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

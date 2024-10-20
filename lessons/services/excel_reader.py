@@ -4,8 +4,8 @@ from typing import Any
 from lessons.models import LessonRecord
 
 
-def read_excel_data(file_path: str):
-    df = pd.read_excel(file_path, header=None)
+def read_excel_data(file):
+    df = pd.read_excel(file)
     df = df.fillna('')
 
     def get_groups(data: Any):
@@ -49,8 +49,8 @@ def read_excel_data(file_path: str):
     return groups, schedule
 
 
-def save_lessons(file_name: str):
-    groups, schedule = read_excel_data(file_name)
+def save_lessons(file):
+    groups, schedule = read_excel_data(file)
 
     for group in groups:
         result = schedule[group]

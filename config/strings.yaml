@@ -34,3 +34,6 @@ lessons:
 
 dashboard:
   title: "Админ-панель"
+  create_user:
+    email_message:
+      "Здравствуйте, {name}.\n\nВы зарегистрированы в системе расписания БГУКИ.\nДанные для входа:\n\nИмя пользователя:\n{username}\n\nПароль:\n{password}"

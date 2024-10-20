@@ -1,12 +1,15 @@
+import traceback
+
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
-from django.urls import reverse
 from django.views import View
-from django.views.generic import TemplateView, CreateView, FormView
+from django.views.generic import TemplateView, FormView
 
 from dashboard.forms import CreateUserForm
+from dashboard.utils import generate_password, share_user_password
+from lessons.services.excel_reader import save_lessons
 from users.models import User, Group
 from utils.string_loader import StringLoader
 
@@ -25,10 +28,11 @@ class DashboardView(UserPassesTestMixin, TemplateView):
         context['title'] = StringLoader.get_string('dashboard.title')
         return context
 
-#TODO
+
+# TODO
 class CreateUserView(FormView):
     template_name = 'dashboard/create_user.html'
-    form_class = CreateUserForm  # Укажите вашу форму
+    form_class = CreateUserForm
 
     def form_valid(self, form):
         username = form.cleaned_data['username']
@@ -38,9 +42,16 @@ class CreateUserView(FormView):
         email = form.cleaned_data['email']
         group = form.cleaned_data['group']
 
-        user = User.objects.create_user(username=username,first_name=first_name, last_name=last_name, middle_name=middle_name,
+        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
+                                        middle_name=middle_name,
                                         email=email, group=group)
+
+        random_password = generate_password()
+
+        user.set_password(random_password)
         user.save()
+
+        share_user_password(user, random_password)
         messages.success(self.request, 'Успешная регистрация пользователя!')
         return super().form_valid(form)
 
@@ -53,5 +64,31 @@ class CreateUserView(FormView):
         context['groups'] = Group.objects.all()
         return context
 
-    def get_success_url(self):
-        return f''
+
+class UploadExcelView(TemplateView, View):
+    template_name = 'dashboard/upload_lessons.html'
+
+    def post(self, request):
+        context = super().get_context_data()
+        uploaded_file = request.FILES.get('file')
+        if uploaded_file:
+            try:
+                save_lessons(uploaded_file)
+            except TypeError:
+                context['result'] = StringLoader.get_string('lessons.upload.error')
+                context['description'] = StringLoader.get_string('lessons.upload.type_error')
+            except Exception as _ex:
+                traceback.print_exc()
+                context['result'] = StringLoader.get_string('lessons.upload.error')
+                context['description'] = _ex
+            else:
+                context['result'] = StringLoader.get_string('lessons.upload.success')
+        else:
+            return HttpResponse("Ошибка: файл не был загружен")
+        return render(request, self.template_name, context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = StringLoader.get_string('lessons.upload.title')
+
+        return context

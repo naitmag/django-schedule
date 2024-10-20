@@ -10,3 +10,6 @@ class CreateUserForm(forms.Form):
     middle_name = forms.CharField(max_length=30)
     email = forms.EmailField(required=True)
     group = forms.ModelChoiceField(queryset=Group.objects.all(), required=True)
+
+class UploadLessons(forms.Form):
+    file = forms.FileInput()

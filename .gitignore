@@ -6,5 +6,6 @@ db.sqlite3
 *__pycache__
 
 *.xlsx
+new_users.txt
 
 .env

@@ -73,25 +73,4 @@ class GetWeekScheduleView(View):
         return JsonResponse(response_data)
 
 
-class UploadExcelView(TemplateView):
-    template_name = 'lessons/upload.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        file_name = self.request.GET.get('file')
-
-        context['title'] = StringLoader.get_string('lessons.upload.title')
-        try:
-            file_name += '.xlsx'
-            save_lessons(file_name)
-        except TypeError:
-            context['result'] = StringLoader.get_string('lessons.upload.error')
-            context['description'] = StringLoader.get_string('lessons.upload.type_error')
-        except Exception as _ex:
-            traceback.print_exc()
-            context['result'] = StringLoader.get_string('lessons.upload.error')
-            context['description'] = _ex
-        else:
-            context['result'] = StringLoader.get_string('lessons.upload.success')
-
-        return context
