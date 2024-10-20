@@ -18,7 +18,7 @@
 
             <div class="user-details">
                 <h2>{{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</h2> <!-- ФИО -->
-                <span class="group-number" style="background-color: var(--random-color);">Группа: {{ user.group.number }}</span>
+                <span class="group-number" style="background-color: var(--random-color);">Группа: {{ student.group.number }}</span>
                 <!-- Номер группы -->
                 <span class="status-container">
                     <p class="status on-lesson">На занятии</p> <!-- Статус -->
@@ -43,10 +43,10 @@
         <!-- Условие для отображения статуса занятия -->
         <div class="profile-data">
             <h3>Информация</h3>
-            <p><strong>Факультет: </strong>{{ user.group.faculty }}</p>
-            <p><strong>Кафедра: </strong> {{ user.group.name }}</p>
-            <p><strong>Специализация: </strong> {{user.group.specialization}} ({{ user.group.number }})</p>
-            <p><strong>Курс: </strong> {{user.group.course}} курс</p>
+            <p><strong>Факультет: </strong>{{ student.group.faculty }}</p>
+            <p><strong>Кафедра: </strong> {{ student.group.department }}</p>
+            <p><strong>Специализация: </strong> {{student.group.specialization}} ({{ student.group.number }})</p>
+            <p><strong>Курс: </strong> {{student.group.course}} курс</p>
         </div>
 
         <div class="contact-info">

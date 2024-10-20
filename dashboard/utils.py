@@ -20,4 +20,4 @@ def share_user_password(user: User, password: str):
     # except:
 
     with open('new_users.txt', 'a', encoding='utf-8') as file:
-        file.write(f"\n{user.email}\n{user.username}\n{password}\n\n")
+        file.write(f"\n{user.email}\n{password}\n\n")

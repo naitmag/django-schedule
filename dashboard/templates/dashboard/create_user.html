@@ -10,8 +10,8 @@
         <form id="register-form" action="{% url 'dashboard:create_user' %}" method="post">
             {% csrf_token %}
             <div class="input-group-register">
-                    <label for="username">Имя пользователя*</label>
-                    <input type="text" id="username" name="username" required>
+                    <label for="email">Адрес электронной почты*</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
             <div class="input-pair">
                 <div class="input-group-register">
@@ -23,15 +23,10 @@
                     <input type="text" id="first_name" name="first_name" required>
                 </div>
             </div>
-            <div class="input-pair">
+
                 <div class="input-group-register">
                     <label for="middle_name">Отчество</label>
                     <input type="text" id="middle_name" name="middle_name">
-                </div>
-                <div class="input-group-register">
-                    <label for="email">Адрес электронной почты*</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
             </div>
 
             <div class="input-group-register">

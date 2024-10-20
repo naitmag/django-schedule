@@ -5,9 +5,7 @@ from users.models import User
 
 
 class UserLoginForm(AuthenticationForm):
-    username = forms.CharField()
+    email = forms.EmailField()
     password = forms.CharField()
 
-    class Meta:
-        model = User
-        fields = ['username', 'password']
+
