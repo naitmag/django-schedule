@@ -7,7 +7,7 @@
     <div class="profile-container">
         <div class="user-info">
             <div class="profile-pic">
-                {% if user.image %}
+                {% if user_data.image %}
                 <img src="{{ user.image.url }}" alt="Фото пользователя"
                      style="width: 100%; height: 100%; border-radius: 10px;">
                 {% else %}
@@ -17,15 +17,15 @@
             </div>
 
             <div class="user-details">
-                <h2>{{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</h2> <!-- ФИО -->
-                <span class="group-number" style="background-color: var(--random-color);">Группа: {{ student.group.number }}</span>
+                <h2>{{ user_data.last_name }} {{ user_data.first_name }} {{ user_data.middle_name }}</h2> <!-- ФИО -->
+                <span class="group-number" style="background-color: var(--random-color);">{% if user_data.is_student %}Группа: {{ user_data.group.number }}{% else %}{{ user_data.position}}{% endif %}</span>
                 <!-- Номер группы -->
                 <span class="status-container">
                     <p class="status on-lesson">На занятии</p> <!-- Статус -->
                 </span>
             </div>
         </div>
-        {%if request.user == user%}
+        {%if request.user == user_data.user%}
         <h4 align="center">Редактировать профиль</h4>
         {% endif %}
         <!-- Карточка с занятием -->
@@ -43,15 +43,17 @@
         <!-- Условие для отображения статуса занятия -->
         <div class="profile-data">
             <h3>Информация</h3>
-            <p><strong>Факультет: </strong>{{ student.group.faculty }}</p>
-            <p><strong>Кафедра: </strong> {{ student.group.department }}</p>
-            <p><strong>Специализация: </strong> {{student.group.specialization}} ({{ student.group.number }})</p>
-            <p><strong>Курс: </strong> {{student.group.course}} курс</p>
+            <p><strong>Факультет: </strong>{{ user_data.faculty }}</p>
+            <p><strong>Кафедра: </strong> {{ user_data.department }}</p>
+            {% if user_data.is_student %}
+            <p><strong>Специализация: </strong> {{user_data.group.specialization}} ({{ user_data.group.number }})</p>
+            <p><strong>Курс: </strong> {{user_data.group.course}} курс</p>
+            {% endif %}
         </div>
 
         <div class="contact-info">
             <h3>Контакты</h3>
-            <p><strong>Email: </strong>{{ user.email }}</p>
+            <p><strong>Email: </strong>{{ user_data.email }}</p>
 
 
         </div>

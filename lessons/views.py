@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView, TemplateView
 
 from lessons.models import Lesson, Week
 from lessons.services.excel_reader import save_lessons
-from users.models import Group
+from users.models import Group, UserData
 from utils.string_loader import StringLoader
 
 
@@ -15,9 +15,6 @@ class ScheduleView(ListView):
     model = Lesson
     template_name = "lessons/schedule.html"
     context_object_name = "lessons"
-
-    def get_queryset(self):
-        return
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -30,6 +27,9 @@ class ScheduleView(ListView):
         context["teacher"] = teacher
         context["group"] = group
         context["title"] = StringLoader.get_string('lessons.schedule.title')
+        if not teacher and not group:
+            user_data = UserData(self.request.user)
+            context['user_data'] = user_data
         return context
 
 
@@ -49,28 +49,31 @@ class LessonView(DetailView):
         return context
 
 
+# TODO
 class GetWeekScheduleView(View):
     def get(self, request):
         week_number = request.GET.get("week") or Week.get_current_week()
         teacher = request.GET.get("teacher")
+        group_number = request.GET.get('group')
 
-        if not teacher:
-            group_number = request.GET.get('group')
+        if teacher and group_number:
+            return JsonResponse({})
+
+        if group_number:
             try:
-                if group_number:
-                    group = Group.objects.get(number=group_number)
-                else:
-                    group_id = request.GET.get("group_id") or self.request.user.group.pk
-                    group = Group.objects.get(id=group_id)
+                group = Group.objects.get(number=group_number)
             except Group.DoesNotExist:
                 return JsonResponse({})
             week = Week(week_number, group=group)
-        else:
+        elif teacher:
             week = Week(week_number, teacher=teacher)
+        else:
+            if self.request.user.is_teacher:
+                week = Week(week_number, teacher=self.request.user.last_name)
+            elif self.request.user.is_student:
+                user_data = UserData(self.request.user)
+                week = Week(week_number, group=user_data.group)
 
         response_data = week.get_schedule_json()
 
         return JsonResponse(response_data)
-
-
-

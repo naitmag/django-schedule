@@ -5,7 +5,7 @@ from users.models import User
 
 
 class UserLoginForm(AuthenticationForm):
-    email = forms.EmailField()
+    username = forms.CharField()
     password = forms.CharField()
 
 

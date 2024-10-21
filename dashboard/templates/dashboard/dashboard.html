@@ -10,14 +10,19 @@
 
     <!-- Блок с ссылками -->
     <div class="link-block">
+        <a href="{% url "dashboard:create_student"%}" class="link-card">
+            <h2>Добавить студента</h2>
+            <p>Предоставьте доступ к платформе новому студенту, создав аккаунт для него.</p>
+            <p class="action">Перейти</p>
+        </a>
+        <a href="{% url "dashboard:create_teacher"%}" class="link-card">
+            <h2>Добавить преподавателя</h2>
+            <p>Предоставьте доступ к платформе новому преподавателю, создав аккаунт для него.</p>
+            <p class="action">Перейти</p>
+        </a>
         <a href="{% url "dashboard:upload_lessons"%}" class="link-card">
             <h2>Загрузить расписание</h2>
             <p>Загрузите расписание занятий из .xlsx файла.</p>
-            <p class="action">Перейти</p>
-        </a>
-        <a href="{% url "dashboard:create_user"%}" class="link-card">
-            <h2>Создать пользователя</h2>
-            <p>Предоставьте доступ к платформе новому пользователю, создав аккаунт для него.</p>
             <p class="action">Перейти</p>
         </a>
         <a href="{% url "admin:index"%}" class="link-card">

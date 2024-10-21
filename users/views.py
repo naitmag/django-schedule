@@ -8,7 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 
 from users.forms import UserLoginForm
-from users.models import User, Group, Student, Teacher
+from users.models import User, Group, Student, Teacher, UserData
 from utils.string_loader import StringLoader
 
 
@@ -40,17 +40,13 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 
     def get_object(self, queryset=None):
         kwarg = self.kwargs.get(self.id_kwarg) or self.request.user.pk
+        user = User.objects.get(id=kwarg)
 
         try:
-            if self.request.user.is_student:
-                user = Student.objects.get(user__id=kwarg)
-            elif self.request.user.is_teacher:
-                user = Teacher.objects.get(user__id=kwarg)
-            else:
-                raise Http404("Invaild user type")
+            user_data = UserData(user)
         except User.DoesNotExist:
             raise Http404("User does not exist")
-        return user
+        return user_data
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -58,6 +54,8 @@ class UserProfileView(LoginRequiredMixin, DetailView):
         title = StringLoader.get_string('users.profile.title') if not self.kwargs.get(
             self.id_kwarg) else self.object.user.get_full_name()
         context['title'] = title
+        context['user_data'] = self.object
+
         return context
 
 

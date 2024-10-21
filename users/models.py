@@ -46,6 +46,8 @@ class User(AbstractUser):
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
 
+    data = None
+
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -57,9 +59,6 @@ class User(AbstractUser):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
-    def get_group_number(self):
-        # return self.group.number if self.group else ''
-        return 'group'
 
     def __str__(self):
         return f"[{self.pk}] {self.get_full_name()} {self.middle_name}"
@@ -92,3 +91,28 @@ class Teacher(models.Model):
 
     def __str__(self):
         return f"Преподаватель | {self.user.get_full_name()} {self.user.middle_name}"
+
+
+class UserData:
+    def __init__(self, user: User):
+        self.user = user
+
+        self.first_name = user.first_name
+        self.last_name = user.last_name
+        self.middle_name = user.middle_name
+        self.email = user.email
+        self.is_student = user.is_student
+        self.is_teacher = user.is_teacher
+
+        if user.is_student:
+            self.data = Student.objects.get(user__id=user.pk)
+            self.group = self.data.group
+            self.department = self.group.department
+            self.faculty = self.group.faculty
+
+        elif user.is_teacher:
+            self.data = Teacher.objects.get(user__id=user.pk)
+            self.image = self.data.image
+            self.position = self.data.position
+            self.department = self.data.department
+            self.faculty = self.data.faculty

@@ -7,7 +7,7 @@
 <div class="main-content-login">
     <div class="register-container">
         <h1>Регистрация пользователя</h1>
-        <form id="register-form" action="{% url 'dashboard:create_user' %}" method="post">
+        <form id="register-form" action="{% url 'dashboard:create_student' %}" method="post">
             {% csrf_token %}
             <div class="input-group-register">
                     <label for="email">Адрес электронной почты*</label>
