@@ -8,10 +8,11 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 
 from users.forms import UserLoginForm
-from users.models import User, Group
+from users.models import User, Group, Student, Teacher, UserData
 from utils.string_loader import StringLoader
 
 
+# TODO Login with email
 class UserLoginView(LoginView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
@@ -38,22 +39,22 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     id_kwarg = "user_id"
 
     def get_object(self, queryset=None):
-        kwarg = self.kwargs.get(self.id_kwarg)
-        if not kwarg:
-            return self.request.user
+        kwarg = self.kwargs.get(self.id_kwarg) or self.request.user.pk
+        user = User.objects.get(id=kwarg)
 
         try:
-            user = User.objects.get(id=kwarg)
+            user_data = UserData(user)
         except User.DoesNotExist:
             raise Http404("User does not exist")
-
-        return user
+        return user_data
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        title = StringLoader.get_string('users.profile.title') if not self.kwargs.get(self.id_kwarg) else self.object.get_full_name()
+        title = StringLoader.get_string('users.profile.title') if not self.kwargs.get(
+            self.id_kwarg) else self.object.user.get_full_name()
         context['title'] = title
+        context['user_data'] = self.object
 
         return context
 

@@ -7,10 +7,10 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView, FormView
 
-from dashboard.forms import CreateUserForm
+from dashboard.forms import CreateStudentForm, CreateTeacherForm
 from dashboard.utils import generate_password, share_user_password
 from lessons.services.excel_reader import save_lessons
-from users.models import User, Group
+from users.models import User, Group, Student, Teacher
 from utils.string_loader import StringLoader
 
 
@@ -30,26 +30,27 @@ class DashboardView(UserPassesTestMixin, TemplateView):
 
 
 # TODO
-class CreateUserView(FormView):
-    template_name = 'dashboard/create_user.html'
-    form_class = CreateUserForm
+class CreateStudentView(FormView):
+    template_name = 'dashboard/create_student.html'
+    form_class = CreateStudentForm
 
     def form_valid(self, form):
-        username = form.cleaned_data['username']
         first_name = form.cleaned_data['first_name']
         last_name = form.cleaned_data['last_name']
         middle_name = form.cleaned_data['middle_name']
         email = form.cleaned_data['email']
         group = form.cleaned_data['group']
 
-        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
+        user = User.objects.create_user(first_name=first_name, last_name=last_name,
                                         middle_name=middle_name,
-                                        email=email, group=group)
+                                        email=email, is_student=True)
 
         random_password = generate_password()
 
         user.set_password(random_password)
         user.save()
+        student = Student.objects.create(user=user, group=group)
+        student.save()
 
         share_user_password(user, random_password)
         messages.success(self.request, 'Успешная регистрация пользователя!')
@@ -63,6 +64,50 @@ class CreateUserView(FormView):
         context = super().get_context_data(**kwargs)
         context['groups'] = Group.objects.all()
         return context
+
+    def get_success_url(self):
+        return ''
+
+
+class CreateTeacherView(FormView):
+    template_name = 'dashboard/create_teacher.html'
+    form_class = CreateTeacherForm
+
+    def form_valid(self, form):
+        first_name = form.cleaned_data['first_name']
+        last_name = form.cleaned_data['last_name']
+        middle_name = form.cleaned_data['middle_name']
+        email = form.cleaned_data['email']
+        position = form.cleaned_data['position']
+        department = form.cleaned_data['department']
+        faculty = form.cleaned_data['faculty']
+
+        user = User.objects.create_user(first_name=first_name, last_name=last_name,
+                                        middle_name=middle_name,
+                                        email=email, is_teacher=True)
+
+        random_password = generate_password()
+
+        user.set_password(random_password)
+        user.save()
+        teacher = Teacher.objects.create(user=user, position=position, department=department, faculty=faculty)
+        teacher.save()
+
+        share_user_password(user, random_password)
+        messages.success(self.request, 'Успешная регистрация пользователя!')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, form.errors)
+        return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['groups'] = Group.objects.all()
+        return context
+
+    def get_success_url(self):
+        return ''
 
 
 class UploadExcelView(TemplateView, View):
