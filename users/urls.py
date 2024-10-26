@@ -10,5 +10,6 @@ urlpatterns = [
     path('profile/<int:user_id>', views.UserProfileView.as_view(), name="profile"),
     path('profile/', views.UserProfileView.as_view(), name="profile"),
     path('logout/', views.logout, name='logout'),
+    path('teachers/', views.TeachersListView.as_view(), name='teachers'),
 
 ]

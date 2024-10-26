@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="main-content">
+    <div align="center">
+        <div class="register-container">
+            <h3>Не нашли преподавателя?</h3>
+            <p>Получите расписание для преподавателя, которого нет в системе.</p>
+            <form id="register-form" action="{% url "lessons:schedule" %}" method="get">
+                <div class="input-group-register">
+                    <input type="text" id="teacher" name="teacher" required>
+                </div>
+                <button type="submit" id="register-button" class="register-button active">Перейти к расписанию</button>
+            </form>
+        </div>
+    </div>
+    <h1 class="page-title">Список преподавателей</h1>
+    <p class="main-description">Всего преподавателей: {{teachers.count}}</p>
+    <div class="profile-group-cards-container">
+      {% for teacher in teachers%}
+  <div class="profile-group-card">
+    <a href="{% url "users:profile" teacher.user.pk %}" class="card-content">
+      <h2 class="group-title"> {{teacher.user.get_full_name}}</h2>
+      <p class="group-info"><strong>Кафедра</strong></p>
+      <p class="group-info">{{ teacher.department}}</p>
+      <p class="group-info"><strong>Факультет</strong></p>
+      <p class="group-info">{{ teacher.faculty}}</p>
+    </a>
+    <a href="{% url "lessons:schedule" %}?teacher={{teacher.user.last_name}}" class="schedule-button" style="background-color: var(--random-color);">Просмотреть расписание</a>
+  </div>
+      {% endfor %}
+    </div>
+</div>
+{% endblock %}

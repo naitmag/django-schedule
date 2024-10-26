@@ -109,6 +109,22 @@ class GroupPageView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = StringLoader.get_string('users.group_page.title') + self.object.number
-        context['students'] = User.objects.filter(group__number=self.object.number)
+        context['students'] = Student.objects.filter(group__number=self.object.number)
 
+        return context
+
+
+class TeachersListView(ListView):
+    model = Teacher
+    template_name = "users/teachers.html"
+    context_object_name = "teachers"
+
+    def get_queryset(self):
+        groups = super().get_queryset()
+        return groups
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["title"] = StringLoader.get_string('users.groups.title')
         return context
