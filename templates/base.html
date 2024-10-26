@@ -23,7 +23,7 @@
         <li><a href="{% url "lessons:schedule"%}">Расписание</a></li>
         {% endif %}
         <li><a href="{% url "groups"%}">Группы</a></li>
-        <li><a href="teacher.html">Преподаватели</a></li>
+        <li><a href="{% url "users:teachers"%}">Преподаватели</a></li>
         {% if user.is_admin or user.is_staff %}
         <li><a href="{% url "dashboard:index" %}">Админ-панель</a></li>
         {% endif%}

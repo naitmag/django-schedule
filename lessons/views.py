@@ -1,11 +1,8 @@
-import traceback
-
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.views import View
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import ListView, DetailView
 
 from lessons.models import Lesson, Week
-from lessons.services.excel_reader import save_lessons
 from users.models import Group, UserData
 from utils.string_loader import StringLoader
 
@@ -53,17 +50,17 @@ class LessonView(DetailView):
 class GetWeekScheduleView(View):
     def get(self, request):
         week_number = request.GET.get("week") or Week.get_current_week()
-        teacher = request.GET.get("teacher")
+        teacher: str = request.GET.get("teacher")
         group_number = request.GET.get('group')
 
         if teacher and group_number:
-            return JsonResponse({})
+            return Http404()
 
         if group_number:
             try:
                 group = Group.objects.get(number=group_number)
             except Group.DoesNotExist:
-                return JsonResponse({})
+                return Http404()
             week = Week(week_number, group=group)
         elif teacher:
             week = Week(week_number, teacher=teacher)

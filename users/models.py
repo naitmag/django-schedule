@@ -59,7 +59,6 @@ class User(AbstractUser):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
-
     def __str__(self):
         return f"[{self.pk}] {self.get_full_name()} {self.middle_name}"
 
@@ -93,6 +92,7 @@ class Teacher(models.Model):
         return f"Преподаватель | {self.user.get_full_name()} {self.user.middle_name}"
 
 
+# TODO
 class UserData:
     def __init__(self, user: User):
         self.user = user
