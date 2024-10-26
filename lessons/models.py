@@ -28,30 +28,42 @@ class Week:
         current_week = (difference.days + 1) // 7 + 1
         return current_week
 
-    def get_schedule_json(self):
+    def get_schedule_json(self, is_teacher=False):
         response_data = {
             'schedule': [],
             'current_week': self.get_current_week()
         }
 
-        for i in range(len(Lesson.DAYS)):
+        for i, day in enumerate(Lesson.DAYS):
             date = self.date + timedelta(days=i)
             content = {
-                'title': Lesson.DAYS[i][1],
+                'title': day[1],
                 'date': date.strftime('%d.%m'),
                 'lessons': []
             }
+
+            last_lesson = None
             for lesson in self.lessons:
-                if i == lesson.day:
-                    value = {
-                        'id': lesson.pk,
-                        'timeSlot': lesson.get_time(),
-                        'lesson_type': lesson.lesson_type,
-                        'title': lesson.name,
-                        'subgroup': lesson.subgroup,
-                        'teacher': lesson.teacher
-                    }
-                    content['lessons'].append(value)
+                if i != lesson.day:
+                    continue
+
+                teacher_info = f"{lesson.teacher} {lesson.group.number}" if is_teacher else lesson.teacher
+                lesson_data = {
+                    'id': lesson.pk,
+                    'timeSlot': lesson.get_time(),
+                    'lesson_type': lesson.lesson_type,
+                    'title': lesson.name,
+                    'subgroup': lesson.subgroup,
+                    'teacher': teacher_info
+                }
+
+                if is_teacher and last_lesson and lesson.name == last_lesson.name and \
+                        lesson.lesson_type == last_lesson.lesson_type and lesson.number == last_lesson.number:
+                    content['lessons'][-1]['teacher'] += f", {lesson.group.number}"
+                else:
+                    content['lessons'].append(lesson_data)
+                    last_lesson = lesson
+
             response_data['schedule'].append(content)
 
         return response_data
@@ -75,7 +87,12 @@ class LessonRecord:
     def get_list(self) -> list:
         result = []
         for item in self.weeks:
-            group = Group.objects.get(number=self.group)
+            try:
+                group = Group.objects.get(number=self.group)
+            except Group.DoesNotExist:
+                group = Group.objects.create(number=self.group, course=int(self.group[0]), department='Нет информации',
+                                             faculty='Нет информации')
+
             interval = self.parse_interval(item[0])
             lesson = Lesson(
                 day=self.day,
@@ -245,9 +262,9 @@ class Lesson(models.Model):
     def get_day_name(self):
         return self.DAYS[self.day][1]
 
-
     def get_group_number(self):
         return self.group.number
+
     def get_lesson_type(self):
         lessons_order = ['л.', 'пр.', 'лаб.', 'сем.', 'кардио', 'силовой', '-']
         return self.LESSON_TYPES[lessons_order.index(self.lesson_type)][1]
