@@ -17,6 +17,9 @@ users:
   group_page:
     title:
       'Группа '
+  teachers:
+    title:
+      'Список преподавателей'
 
 lessons:
   schedule:

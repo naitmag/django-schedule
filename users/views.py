@@ -13,7 +13,6 @@ from users.models import User, Group, Student, Teacher, UserData
 from utils.string_loader import StringLoader
 
 
-# TODO Login with email
 class UserLoginView(LoginView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
@@ -40,11 +39,8 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     id_kwarg = "user_id"
 
     def get_object(self, queryset=None):
-        kwarg = self.kwargs.get(self.id_kwarg) or self.request.user.pk
-        user = User.objects.get(id=kwarg)
-
         try:
-            user_data = UserData(user)
+            user_data = UserData(self.request.user)
         except User.DoesNotExist:
             raise Http404("User does not exist")
         return user_data
@@ -59,6 +55,8 @@ class UserProfileView(LoginRequiredMixin, DetailView):
             week = Week(group=self.object.group)
         elif self.object.is_teacher:
             week = Week(teacher=self.object.last_name)
+        else:
+            raise ValueError('The user must be a student or a teacher.')
 
         context['current_lesson'] = week.get_current_lesson()
         context['title'] = title
@@ -117,7 +115,7 @@ class GroupPageView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = StringLoader.get_string('users.group_page.title') + self.object.number
-        context['students'] = Student.objects.filter(group__number=self.object.number)
+        context['students'] = Student.objects.filter(group__number=self.object.number).select_related('user')
 
         return context
 
@@ -128,11 +126,10 @@ class TeachersListView(ListView):
     context_object_name = "teachers"
 
     def get_queryset(self):
-        groups = super().get_queryset()
-        return groups
+        teachers = super().get_queryset().select_related('user')
+        return teachers
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        context["title"] = StringLoader.get_string('users.groups.title')
+        context["title"] = StringLoader.get_string('users.teachers.title')
         return context
