@@ -39,17 +39,23 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     id_kwarg = "user_id"
 
     def get_object(self, queryset=None):
-        try:
-            user_data = UserData(self.request.user)
-        except User.DoesNotExist:
-            raise Http404("User does not exist")
-        return user_data
+        user_id = self.kwargs.get(self.id_kwarg)
+
+        user = self.request.user if not user_id else None
+
+        if user_id:
+            try:
+                user = User.objects.select_related('student', 'teacher').get(id=user_id)
+            except User.DoesNotExist:
+                raise Http404("User does not exist")
+
+        return UserData(user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        user_id = self.kwargs.get(self.id_kwarg)
 
-        title = StringLoader.get_string('users.profile.title') if not self.kwargs.get(
-            self.id_kwarg) else self.object.user.get_full_name()
+        title = StringLoader.get_string('users.profile.title') if not user_id else self.object.user.get_full_name()
 
         if self.object.is_student:
             week = Week(group=self.object.group)
