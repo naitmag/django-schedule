@@ -26,7 +26,7 @@
                 {% for student in students%}
                 <a href="{% url "users:profile" student.id %}" class="student-card">
                     <div class="student-card-content">
-                        <span class="student-name">{{student.last_name}} {{student.first_name}}</span>
+                        <span class="student-name">{{student.user.last_name}} {{student.user.first_name}}</span>
                     </div>
                 </a>
                 {% endfor %}

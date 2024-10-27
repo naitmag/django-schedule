@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 
+from lessons.models import Week
 from users.forms import UserLoginForm
 from users.models import User, Group, Student, Teacher, UserData
 from utils.string_loader import StringLoader
@@ -53,6 +54,13 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 
         title = StringLoader.get_string('users.profile.title') if not self.kwargs.get(
             self.id_kwarg) else self.object.user.get_full_name()
+
+        if self.object.is_student:
+            week = Week(group=self.object.group)
+        elif self.object.is_teacher:
+            week = Week(teacher=self.object.last_name)
+
+        context['current_lesson'] = week.get_current_lesson()
         context['title'] = title
         context['user_data'] = self.object
 
