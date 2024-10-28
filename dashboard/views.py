@@ -2,6 +2,7 @@ import traceback
 
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.db import transaction
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.views import View
@@ -41,19 +42,20 @@ class CreateStudentView(FormView):
         email = form.cleaned_data['email']
         group = form.cleaned_data['group']
 
-        user = User.objects.create_user(first_name=first_name, last_name=last_name,
-                                        middle_name=middle_name,
-                                        email=email, is_student=True)
+        user_password = generate_password()
+        try:
+            with transaction.atomic():
+                user = User.objects.create_user(first_name=first_name, last_name=last_name,
+                                                middle_name=middle_name,
+                                                email=email, is_student=True, password=user_password)
 
-        random_password = generate_password()
+                Student.objects.create(user=user, group=group)
+        except Exception as e:
+            messages.error(self.request, e)
+        else:
+            share_user_password(user, user_password)
+            messages.success(self.request, 'Успешная регистрация пользователя!')
 
-        user.set_password(random_password)
-        user.save()
-        student = Student.objects.create(user=user, group=group)
-        student.save()
-
-        share_user_password(user, random_password)
-        messages.success(self.request, 'Успешная регистрация пользователя!')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -82,19 +84,20 @@ class CreateTeacherView(FormView):
         department = form.cleaned_data['department']
         faculty = form.cleaned_data['faculty']
 
-        user = User.objects.create_user(first_name=first_name, last_name=last_name,
-                                        middle_name=middle_name,
-                                        email=email, is_teacher=True)
+        user_password = generate_password()
+        try:
+            with transaction.atomic():
+                user = User.objects.create_user(first_name=first_name, last_name=last_name,
+                                                middle_name=middle_name,
+                                                email=email, is_teacher=True, password=user_password)
 
-        random_password = generate_password()
+                Teacher.objects.create(user=user, position=position, department=department, faculty=faculty)
+        except Exception as e:
+            messages.error(self.request, e)
+        else:
+            share_user_password(user, user_password)
+            messages.success(self.request, 'Успешная регистрация пользователя!')
 
-        user.set_password(random_password)
-        user.save()
-        teacher = Teacher.objects.create(user=user, position=position, department=department, faculty=faculty)
-        teacher.save()
-
-        share_user_password(user, random_password)
-        messages.success(self.request, 'Успешная регистрация пользователя!')
         return super().form_valid(form)
 
     def form_invalid(self, form):
