@@ -42,7 +42,18 @@ class LessonView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         teacher = self.object.teacher
-        context['related_lessons'] = Lesson.objects.filter(teacher__icontains=teacher).exclude(id=self.object.id)
+
+        lessons = Lesson.objects.select_related('group').filter(teacher__icontains=teacher).exclude(id=self.object.id).order_by('name')
+
+        unique_lessons = []
+        titles = set()
+        for lesson in lessons:
+            title = f"{lesson.lesson_type} {lesson.name} {lesson.group.number}"
+            if title not in titles:
+                unique_lessons.append(lesson)
+                titles.add(title)
+
+        context['related_lessons'] = unique_lessons
         context['title'] = self.object.name
         return context
 

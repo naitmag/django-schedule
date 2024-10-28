@@ -47,9 +47,9 @@
     </div>
 
     <div class="lesson-card">
-        <h2 class="suggestion-title">Лекции от преподавателя: {{lesson.teacher}}</h2>
+        <h2 class="suggestion-title">Занятия от преподавателя: {{lesson.teacher}}</h2>
         {% for related_lesson in related_lessons%}
-        <div class="suggestion-item"><a href="{% url "lessons:lesson" related_lesson.id%}">{{ related_lesson.get_time }} {{ related_lesson.lesson_type }} {{ related_lesson.name }}</a></div>
+        <div class="suggestion-item"><a href="{% url "lessons:lesson" related_lesson.id%}">{{ related_lesson.lesson_type }} {{ related_lesson.name }} {{ related_lesson.group.number }}</a></div>
         {% endfor %}
     </div>
     <div style="padding: 20px;">
