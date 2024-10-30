@@ -8,7 +8,7 @@
         <div class="user-info">
             <div class="profile-pic">
                 {% if user_data.image %}
-                <img src="{{ user.image.url }}" alt="Фото пользователя"
+                <img src="{{ user_data.image.url }}" alt="Фото пользователя"
                      style="width: 100%; height: 100%; border-radius: 10px;">
                 {% else %}
                 <img src="{% static "deps/images/profile-photo.jpg"%}" alt="Фото пользователя"
@@ -21,25 +21,29 @@
                 <span class="group-number" style="background-color: var(--random-color);">{% if user_data.is_student %}Группа: {{ user_data.group.number }}{% else %}{{ user_data.position}}{% endif %}</span>
                 <!-- Номер группы -->
                 <span class="status-container">
-                    <p class="status on-lesson">На занятии</p> <!-- Статус -->
+                    {% if current_lesson %}
+                    <p class="status on-lesson">Есть занятие</p> <!-- Статус -->
+                    {% else %}
+                    <p class="status">Нет занятия</p> <!-- Статус -->
+                    {% endif %}
                 </span>
             </div>
         </div>
         {%if request.user == user_data.user%}
         <h4 align="center">Редактировать профиль</h4>
         {% endif %}
+        {% if current_lesson %}
         <!-- Карточка с занятием -->
         <div class="lesson-card">
             <h3>Текущее занятие</h3>
-            <p><strong>Название:</strong> Введение в программирование</p>
-            <p><strong>Тип:</strong> Лекция</p>
-            <p><strong>Время:</strong> 10:05 - 12:25</p>
-            <p><strong>Аудитория:</strong> 612</p>
+            <p><strong>Название:</strong> {{current_lesson.name}}</p>
+            <p><strong>Тип:</strong> {{current_lesson.lesson_type }}</p>
+            <p><strong>Время:</strong> {{current_lesson.get_time}}</p>
             <button class="main-button" style="background-color: var(--random-color);"
-                    onclick="location.href='lesson.html'">Перейти к занятию
+                    onclick="location.href='{% url "lessons:lesson" current_lesson.id %}'">Перейти к занятию
             </button>
         </div>
-
+        {% endif %}
         <!-- Условие для отображения статуса занятия -->
         <div class="profile-data">
             <h3>Информация</h3>

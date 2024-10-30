@@ -21,12 +21,13 @@ class ScheduleView(ListView):
         if teacher and group:
             group = None
 
+        user_data = UserData(self.request.user)
+        context['user_data'] = user_data
+
         context["teacher"] = teacher
         context["group"] = group
         context["title"] = StringLoader.get_string('lessons.schedule.title')
-        if not teacher and not group:
-            user_data = UserData(self.request.user)
-            context['user_data'] = user_data
+
         return context
 
 
@@ -49,7 +50,7 @@ class LessonView(DetailView):
 # TODO
 class GetWeekScheduleView(View):
     def get(self, request):
-        week_number = request.GET.get("week") or Week.get_current_week()
+        week_number = request.GET.get("week")
         teacher: str = request.GET.get("teacher")
         group_number = request.GET.get('group')
 

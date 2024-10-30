@@ -10,15 +10,15 @@ from datetime import datetime, timedelta
 
 
 class Week:
-    def __init__(self, number: int, group: Group = None, teacher: str = None):
-        self.number = number
+    def __init__(self, number: int = None, group: Group = None, teacher: str = None):
+        self.number = number or self.get_current_week()
         self.group = group
         self.teacher = teacher
         self.date = START_LESSONS_DATE + timedelta(weeks=int(self.number) - 1)
         if self.group:
-            self.lessons = Lesson.objects.filter(group_id=group.pk, start__lte=number, end__gte=number)
+            self.lessons = Lesson.objects.filter(group_id=group.pk, start__lte=self.number, end__gte=self.number)
         else:
-            self.lessons = Lesson.objects.filter(teacher__icontains=teacher, start__lte=number, end__gte=number)
+            self.lessons = Lesson.objects.filter(teacher__icontains=teacher, start__lte=self.number, end__gte=self.number)
         self.lessons = self.lessons.order_by('number')
 
     @staticmethod
@@ -27,6 +27,16 @@ class Week:
         difference = current_date - START_LESSONS_DATE
         current_week = (difference.days + 1) // 7 + 1
         return current_week
+
+    def get_current_lesson(self):
+        current_date = datetime.now()
+        current_weekday = current_date.weekday()
+        lesson_number = Lesson.spot_lesson_number(current_date)
+        if lesson_number is None:
+            return None
+
+        lesson = self.lessons.filter(day=current_weekday, number=lesson_number).first()
+        return lesson
 
     def get_schedule_json(self, is_teacher=False):
         response_data = {
@@ -258,6 +268,24 @@ class Lesson(models.Model):
 
     def get_time(self):
         return self.TIMES[self.number][1]
+
+    @classmethod
+    def spot_lesson_number(cls, time: str | datetime):
+        time_format = '%H:%M'
+        if isinstance(time, str):
+            time = datetime.strptime(time, time_format).time()
+        elif isinstance(time, datetime):
+            time = time.time()
+        else:
+            raise ValueError
+        for day in cls.TIMES:
+            interval = day[1].replace(' ', '').split('-')
+
+            lower = datetime.strptime(interval[0], time_format).time()
+            upper = datetime.strptime(interval[1], time_format).time()
+
+            if lower <= time <= upper:
+                return day[0]
 
     def get_day_name(self):
         return self.DAYS[self.day][1]
