@@ -57,14 +57,18 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 
         title = StringLoader.get_string('users.profile.title') if not user_id else self.object.user.get_full_name()
 
-        if self.object.is_student:
+        if self.object.is_staff:
+            current_lesson = None
+        elif self.object.is_student:
             week = Week(group=self.object.group)
+            current_lesson = week.get_current_lesson()
         elif self.object.is_teacher:
             week = Week(teacher=self.object.last_name)
+            current_lesson = week.get_current_lesson()
         else:
             raise ValueError('The user must be a student or a teacher.')
 
-        context['current_lesson'] = week.get_current_lesson()
+        context['current_lesson'] = current_lesson
         context['title'] = title
         context['user_data'] = self.object
 

@@ -82,6 +82,8 @@ class GetWeekScheduleView(View):
             elif self.request.user.is_student:
                 user_data = UserData(self.request.user)
                 week = Week(week_number, group=user_data.group)
+            else:
+                return JsonResponse({})
 
         response_data = week.get_schedule_json((self.request.user.is_teacher and not group_number) or teacher)
 

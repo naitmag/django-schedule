@@ -24,7 +24,7 @@
             <div class="student-card-container">
                 <!-- Пример карточки студента -->
                 {% for student in students%}
-                <a href="{% url "users:profile" student.id %}" class="student-card">
+                <a href="{% url "users:profile" student.user.id %}" class="student-card">
                     <div class="student-card-content">
                         <span class="student-name">{{student.user.last_name}} {{student.user.first_name}}</span>
                     </div>

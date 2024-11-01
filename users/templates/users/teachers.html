@@ -9,7 +9,7 @@
             <p>Получите расписание для преподавателя, которого нет в системе.</p>
             <form id="register-form" action="{% url "lessons:schedule" %}" method="get">
                 <div class="input-group-register">
-                    <input type="text" id="teacher" name="teacher" required>
+                    <input type="text" id="teacher" name="teacher" placeholder="Введите фамилию" required>
                 </div>
                 <button type="submit" id="register-button" class="register-button active">Перейти к расписанию</button>
             </form>

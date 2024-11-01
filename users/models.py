@@ -46,8 +46,6 @@ class User(AbstractUser):
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
 
-    data = None
-
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -103,6 +101,7 @@ class UserData:
         self.email = user.email
         self.is_student = user.is_student
         self.is_teacher = user.is_teacher
+        self.is_staff = user.is_staff
 
         if user.is_student:
             self.data = Student.objects.get(user__id=user.pk)

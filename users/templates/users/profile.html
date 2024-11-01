@@ -18,6 +18,7 @@
 
             <div class="user-details">
                 <h2>{{ user_data.last_name }} {{ user_data.first_name }} {{ user_data.middle_name }}</h2> <!-- ФИО -->
+                {% if user_data.is_student or user_data.is_teacher %}
                 <span class="group-number" style="background-color: var(--random-color);">{% if user_data.is_student %}Группа: {{ user_data.group.number }}{% else %}{{ user_data.position}}{% endif %}</span>
                 <!-- Номер группы -->
                 <span class="status-container">
@@ -27,6 +28,7 @@
                     <p class="status">Нет занятия</p> <!-- Статус -->
                     {% endif %}
                 </span>
+                {% endif %}
             </div>
         </div>
         {%if request.user == user_data.user%}
