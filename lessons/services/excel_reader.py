@@ -1,6 +1,8 @@
 import pandas as pd
 from typing import Any
 
+from django.db import transaction
+
 from lessons.models import LessonRecord
 
 
@@ -58,7 +60,11 @@ def save_lessons(file):
             data = item.split()
             record = LessonRecord(data, group)
             result = record.get_list()
-            for lesson in result:
-                lesson.save()
+            try:
+                with transaction.atomic():
+                    for lesson in result:
+                        lesson.save()
+            except Exception as e:
+                raise e
 
     print("LESSONS SAVED!")
