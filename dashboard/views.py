@@ -10,7 +10,7 @@ from django.views.generic import TemplateView, FormView
 
 from dashboard.forms import CreateStudentForm, CreateTeacherForm
 from dashboard.utils import generate_password, share_user_password
-from lessons.services.excel_reader import save_lessons
+from lessons.services.excel_reader import ExcelReader
 from users.models import User, Group, Student, Teacher
 from utils.string_loader import StringLoader
 
@@ -121,7 +121,7 @@ class UploadExcelView(TemplateView, View):
         uploaded_file = request.FILES.get('file')
         if uploaded_file:
             try:
-                save_lessons(uploaded_file)
+                ExcelReader.save_lessons(uploaded_file)
             except TypeError:
                 context['result'] = StringLoader.get_string('lessons.upload.error')
                 context['description'] = StringLoader.get_string('lessons.upload.type_error')

@@ -97,11 +97,6 @@ class LessonRecord:
     def get_list(self) -> list:
         result = []
         for item in self.weeks:
-            try:
-                group = Group.objects.get(number=self.group)
-            except Group.DoesNotExist:
-                group = Group.objects.create(number=self.group, course=int(self.group[0]), department='Нет информации',
-                                             faculty='Нет информации')
 
             interval = self.parse_interval(item[0])
             lesson = Lesson(
@@ -113,7 +108,7 @@ class LessonRecord:
                 name=self.name.capitalize(),
                 teacher=self.teacher,
                 subgroup=" ".join(self.subgroup),
-                group=group
+                group=self.group
             )
             result.append(lesson)
 
