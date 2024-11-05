@@ -5,7 +5,7 @@
 
 
 <!-- Основной блок с содержимым -->
-<div class="main-content">
+<div align="center" style="margin-top:60px;">
     <div class="lesson-card">
         <h1 class="lesson-title" align="center">{{ lesson.lesson_type }} {{ lesson.name }}</h1>
 
@@ -45,12 +45,15 @@
             </tr>
         </table>
     </div>
-
     <div class="lesson-card">
         <h2 class="suggestion-title">Занятия от преподавателя: {{lesson.teacher}}</h2>
+        {% if related_lessons %}
         {% for related_lesson in related_lessons%}
         <div class="suggestion-item"><a href="{% url "lessons:lesson" related_lesson.id%}">{{ related_lesson.lesson_type }} {{ related_lesson.name }} {{ related_lesson.group.number }}</a></div>
         {% endfor %}
+        {% else %}
+        <span class="main-description">Нет данных</span>
+        {% endif %}
     </div>
     <div style="padding: 20px;">
         <a class="main-button" style="background-color: var(--random-color);" href="{% url "lessons:schedule"%}">Вернуться к расписанию</a>

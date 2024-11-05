@@ -124,12 +124,10 @@ nav ul {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin: 20px auto;
     padding: 20px;
-    width: 80%;
-    text-align: left;
+    text-align: center;
 }
 
 .lesson-title {
-    white-space: nowrap;
     font-size: 28px;
     margin-bottom: 15px;
     color: #333;
@@ -180,6 +178,7 @@ hr {
 }
 
 .suggestion-item a {
+    color: #666;
     text-decoration: none;
 }
 
@@ -1231,6 +1230,13 @@ input[type="number"] {
         margin-bottom: 10px;
         /* Отступ снизу */
     }
+   .register-container {
+        width: 90%;
+        max-width: 400px;
+        margin: 0 auto; /* Центрирование по горизонтали */
+        padding: 20px; /* Немного внутреннего отступа */
+    }
+
 }
 
 /* Футер */
