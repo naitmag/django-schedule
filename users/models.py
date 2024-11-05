@@ -6,9 +6,9 @@ from django.db import models
 class Group(models.Model):
     number = models.CharField(max_length=10, unique=True, verbose_name='Группа')
     course = models.PositiveSmallIntegerField(default=1, verbose_name='Курс')
-    specialization = models.CharField(max_length=150, unique=False, verbose_name='Специализация')
-    department = models.CharField(max_length=150, blank=False, null=False, verbose_name='Кафедра')
-    faculty = models.CharField(max_length=150, blank=False, null=False, verbose_name='Факультет')
+    specialization = models.CharField(max_length=150, default='Нет информации', verbose_name='Специализация')
+    department = models.CharField(max_length=150, default='Нет информации', verbose_name='Кафедра')
+    faculty = models.CharField(max_length=150, default='Нет информации', verbose_name='Факультет')
 
     class Meta:
         db_table = 'group'

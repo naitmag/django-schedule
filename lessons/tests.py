@@ -1,9 +1,9 @@
 from django.test import TestCase
 
-from lessons.services.excel_reader import save_lessons
+from lessons.services.excel_reader import ExcelReader
 
 
 class TestExcelReader(TestCase):
 
     def test_save_lessons(self):
-        save_lessons('data.xlsx')
+        ExcelReader.save_lessons('data.xlsx')
